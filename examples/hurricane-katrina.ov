@@ -16,6 +16,21 @@ story:
   tags: ["hurricane", "disaster", "gulf-coast", "2005"]
   thumbnail: media/cover.jpg
 
+basemaps:
+  - id: carto-dark
+    name: "CartoDB Dark Matter"
+    type: xyz
+    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+    max_zoom: 20
+    attribution: "© OpenStreetMap contributors © CARTO"
+
+  - id: arcgis-satellite
+    name: "Esri World Imagery"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "© Esri, Maxar, Earthstar Geographics"
+
 # ─── TOP-LEVEL PLACES REGISTRY ───
 
 places:
