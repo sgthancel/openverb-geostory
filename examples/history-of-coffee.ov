@@ -1,0 +1,534 @@
+name: history-of-coffee
+version: 1.0.0
+profile: geostory
+story:
+  title: "The History of Coffee"
+  author: "GeoStudio Narrative Team"
+  crs: "EPSG:4326"
+  created: "2026-08-20T10:00:00Z"
+  tags: ["history", "coffee", "trade", "global"]
+
+custom_studio_workspace: "coffee_project_v2"
+
+extensions:
+  qgis:
+    project: "./coffee-history.qgz"
+    render_crs: "EPSG:3857"
+    export_resolution: "1080p"
+
+places:
+  - id: pl_ethiopia
+    as_written: "Ethiopia"
+    resolved:
+      name: "Ethiopia"
+      point: [40.48, 9.14]
+      bounds: [[32.99, 3.39], [47.98, 14.89]]
+      kind: country
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.95
+
+  - id: pl_mocha
+    as_written: "Mocha, Yemen"
+    resolved:
+      name: "Mocha"
+      point: [43.24, 13.31]
+      bounds: [[43.22, 13.29], [43.26, 13.33]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.92
+
+  - id: pl_istanbul
+    as_written: "Constantinople"
+    resolved:
+      name: "Istanbul, Turkey"
+      point: [28.97, 41.00]
+      bounds: [[28.60, 40.80], [29.30, 41.20]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.98
+
+  - id: pl_venice
+    as_written: "Venice"
+    resolved:
+      name: "Venice, Italy"
+      point: [12.31, 45.44]
+      bounds: [[12.20, 45.30], [12.45, 45.60]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.95
+
+  - id: pl_vienna
+    as_written: "Vienna"
+    resolved:
+      name: "Vienna, Austria"
+      point: [16.37, 48.20]
+      bounds: [[16.18, 48.11], [16.57, 48.32]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.96
+
+  - id: pl_london
+    as_written: "London"
+    resolved:
+      name: "London, UK"
+      point: [-0.12, 51.50]
+      bounds: [[-0.51, 51.28], [0.33, 51.69]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.99
+
+  - id: pl_florence
+    as_written: "Florence"
+    resolved:
+      name: "Firenze, Italy"
+      point: [11.25, 43.76]
+      bounds: [[11.15, 43.70], [11.35, 43.85]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.94
+
+  - id: pl_paris
+    as_written: "Paris"
+    resolved:
+      name: "Paris, France"
+      point: [2.35, 48.85]
+      bounds: [[2.22, 48.81], [2.46, 48.90]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.98
+
+  - id: pl_martinique
+    as_written: "Martinique"
+    resolved:
+      name: "Martinique"
+      point: [-61.02, 14.64]
+      bounds: [[-61.23, 14.38], [-60.78, 14.88]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.90
+
+  - id: pl_brazil
+    as_written: "Brazil"
+    resolved:
+      name: "Brazil"
+      point: [-51.92, -14.23]
+      bounds: [[-73.98, -33.75], [-34.79, 5.27]]
+      kind: country
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.97
+
+  - id: pl_colombia
+    as_written: "Colombia"
+    resolved:
+      name: "Colombia"
+      point: [-74.29, 4.57]
+      bounds: [[-79.01, -4.22], [-66.84, 12.45]]
+      kind: country
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.93
+
+  - id: pl_java
+    as_written: "Java"
+    resolved:
+      name: "Java, Indonesia"
+      point: [110.00, -7.00]
+      bounds: [[105.00, -8.70], [114.60, -5.80]]
+      kind: region
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.91
+
+  - id: pl_seattle
+    as_written: "Seattle"
+    resolved:
+      name: "Seattle, WA, USA"
+      point: [-122.33, 47.60]
+      bounds: [[-122.43, 47.49], [-122.22, 47.73]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T10:00:00Z"
+      confidence: 0.98
+
+audio:
+  - id: bg_music
+    kind: music
+    src: "audio/global_history_theme.mp3"
+    at: 0.0
+    duration: 189.0
+    gain_db: -18.0
+    duck: true
+
+  - id: nar_01
+    kind: narration
+    src: "audio/nar_01.wav"
+    at: 0.0
+    duration: 5.0
+  - id: nar_02
+    kind: narration
+    src: "audio/nar_02.wav"
+    at: 5.0
+    duration: 8.0
+  - id: nar_03
+    kind: narration
+    src: "audio/nar_03.wav"
+    at: 13.0
+    duration: 10.0
+  - id: nar_04
+    kind: narration
+    src: "audio/nar_04.wav"
+    at: 23.0
+    duration: 5.0
+  - id: nar_05
+    kind: narration
+    src: "audio/nar_05.wav"
+    at: 28.0
+    duration: 10.0
+  - id: nar_06
+    kind: narration
+    src: "audio/nar_06.wav"
+    at: 38.0
+    duration: 5.0
+  - id: nar_07
+    kind: narration
+    src: "audio/nar_07.wav"
+    at: 43.0
+    duration: 8.0
+  - id: nar_08
+    kind: narration
+    src: "audio/nar_08.wav"
+    at: 51.0
+    duration: 7.0
+  - id: nar_09
+    kind: narration
+    src: "audio/nar_09.wav"
+    at: 58.0
+    duration: 6.0
+  - id: nar_10
+    kind: narration
+    src: "audio/nar_10.wav"
+    at: 64.0
+    duration: 5.0
+  - id: nar_11
+    kind: narration
+    src: "audio/nar_11.wav"
+    at: 69.0
+    duration: 5.0
+  - id: nar_12
+    kind: narration
+    src: "audio/nar_12.wav"
+    at: 74.0
+    duration: 15.0
+  - id: nar_13
+    kind: narration
+    src: "audio/nar_13.wav"
+    at: 89.0
+    duration: 10.0
+  - id: nar_14
+    kind: narration
+    src: "audio/nar_14.wav"
+    at: 99.0
+    duration: 5.0
+  - id: nar_15
+    kind: narration
+    src: "audio/nar_15.wav"
+    at: 104.0
+    duration: 8.0
+  - id: nar_16
+    kind: narration
+    src: "audio/nar_16.wav"
+    at: 112.0
+    duration: 8.0
+  - id: nar_17
+    kind: narration
+    src: "audio/nar_17.wav"
+    at: 120.0
+    duration: 10.0
+  - id: nar_18
+    kind: narration
+    src: "audio/nar_18.wav"
+    at: 130.0
+    duration: 5.0
+  - id: nar_19
+    kind: narration
+    src: "audio/nar_19.wav"
+    at: 135.0
+    duration: 8.0
+  - id: nar_20
+    kind: narration
+    src: "audio/nar_20.wav"
+    at: 143.0
+    duration: 10.0
+  - id: nar_21
+    kind: narration
+    src: "audio/nar_21.wav"
+    at: 153.0
+    duration: 5.0
+  - id: nar_22
+    kind: narration
+    src: "audio/nar_22.wav"
+    at: 158.0
+    duration: 8.0
+  - id: nar_23
+    kind: narration
+    src: "audio/nar_23.wav"
+    at: 166.0
+    duration: 8.0
+  - id: nar_24
+    kind: narration
+    src: "audio/nar_24.wav"
+    at: 174.0
+    duration: 10.0
+  - id: nar_25
+    kind: narration
+    src: "audio/nar_25.wav"
+    at: 184.0
+    duration: 5.0
+
+media:
+  - id: watermark
+    kind: image
+    src: "media/geostudio_logo.png"
+    placement: bottom_right
+    origin: upload
+    credit: "GeoStudio"
+  
+  - id: plant_inset
+    kind: image
+    src: "media/gabriel_de_clieu.jpg"
+    at: 74.0
+    until: 89.0
+    placement: full
+    origin: upload
+    caption: "Gabriel de Clieu sharing his water ration with the coffee seedling."
+
+layers: []
+
+scenes:
+  - id: scene_01
+    sequence: 1
+    title: "Origins"
+    place_id: pl_ethiopia
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_01 }
+    transition: fly
+    audio_ids: [nar_01]
+
+  - id: scene_02
+    sequence: 2
+    title: "The Legend of Kaldi"
+    place_id: pl_ethiopia
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_02 }
+    transition: dissolve
+    audio_ids: [nar_02]
+
+  - id: scene_03
+    sequence: 3
+    title: "Across the Red Sea"
+    place_id: pl_mocha
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_03 }
+    transition: fly
+    audio_ids: [nar_03]
+
+  - id: scene_04
+    sequence: 4
+    title: "The First Cafes"
+    place_id: pl_istanbul
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_04 }
+    transition: cut
+    audio_ids: [nar_04]
+
+  - id: scene_05
+    sequence: 5
+    title: "Into Europe"
+    place_id: pl_venice
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_05 }
+    transition: dissolve
+    audio_ids: [nar_05]
+
+  - id: scene_06
+    sequence: 6
+    title: "Suspicion"
+    timing: { mode: fixed, intended: 5, measured: 5.0, source: nar_06 }
+    transition: fade
+    audio_ids: [nar_06]
+    content:
+      narration: "But it wasn't accepted everywhere at first. Some considered it dangerous."
+
+  - id: scene_07
+    sequence: 7
+    title: "Pope Clement VIII"
+    place_id: pl_florence
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_07 }
+    transition: cut
+    audio_ids: [nar_07]
+
+  - id: scene_08
+    sequence: 8
+    title: "The Vienna Siege"
+    place_id: pl_vienna
+    timing: { mode: derived, intended: 7, measured: 7.0, source: nar_08 }
+    transition: fade
+    audio_ids: [nar_08]
+
+  - id: scene_09
+    sequence: 9
+    title: "The London Coffeehouse"
+    place_id: pl_london
+    timing: { mode: derived, intended: 6, measured: 6.0, source: nar_09 }
+    transition: cut
+    audio_ids: [nar_09]
+
+  - id: scene_10
+    sequence: 10
+    title: "Penny Universities"
+    place_id: pl_london
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_10 }
+    transition: fly
+    audio_ids: [nar_10]
+
+  - id: scene_11
+    sequence: 11
+    title: "French Court"
+    place_id: pl_paris
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_11 }
+    transition: fly
+    audio_ids: [nar_11]
+
+  - id: scene_12
+    sequence: 12
+    title: "The Stolen Plant"
+    place_id: pl_martinique
+    timing: { mode: derived, intended: 15, measured: 15.0, source: nar_12 }
+    transition: cut
+    audio_ids: [nar_12]
+    media_ids: [plant_inset]
+    camera:
+      mode: 3d
+      track:
+        - at: 74.0
+          center: [2.35, 48.85]
+          zoom: 12
+          locked: true
+        - at: 80.0
+          center: [-30.0, 30.0]
+          zoom: 4
+          locked: false
+        - at: 89.0
+          center: [-61.02, 14.64]
+          zoom: 8
+          locked: true
+
+  - id: scene_13
+    sequence: 13
+    title: "South America"
+    place_id: pl_brazil
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_13 }
+    transition: fly
+    audio_ids: [nar_13]
+
+  - id: scene_14
+    sequence: 14
+    title: "Plantation Boom"
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_14 }
+    transition: fade
+    audio_ids: [nar_14]
+
+  - id: scene_15
+    sequence: 15
+    title: "Colombia"
+    place_id: pl_colombia
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_15 }
+    transition: dissolve
+    audio_ids: [nar_15]
+
+  - id: scene_16
+    sequence: 16
+    title: "The Dutch East Indies"
+    place_id: pl_java
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_16 }
+    transition: fly
+    audio_ids: [nar_16]
+
+  - id: scene_17
+    sequence: 17
+    title: "Espresso Invention"
+    place_id: pl_florence
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_17 }
+    transition: cut
+    audio_ids: [nar_17]
+
+  - id: scene_18
+    sequence: 18
+    title: "Mass Market"
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_18 }
+    transition: dissolve
+    audio_ids: [nar_18]
+
+  - id: scene_19
+    sequence: 19
+    title: "Second Wave"
+    place_id: pl_seattle
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_19 }
+    transition: fly
+    audio_ids: [nar_19]
+
+  - id: scene_20
+    sequence: 20
+    title: "Global Commodity"
+    place_id: pl_brazil
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_20 }
+    transition: fly
+    audio_ids: [nar_20]
+
+  - id: scene_21
+    sequence: 21
+    title: "Price Fluctuations"
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_21 }
+    transition: cut
+    audio_ids: [nar_21]
+
+  - id: scene_22
+    sequence: 22
+    title: "Third Wave"
+    place_id: pl_london
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_22 }
+    transition: dissolve
+    audio_ids: [nar_22]
+
+  - id: scene_23
+    sequence: 23
+    title: "The Modern Era"
+    place_id: pl_seattle
+    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_23 }
+    transition: fade
+    audio_ids: [nar_23]
+
+  - id: scene_24
+    sequence: 24
+    title: "Return to Origins"
+    place_id: pl_ethiopia
+    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_24 }
+    transition: fly
+    audio_ids: [nar_24]
+    content:
+      caption: "Specialty coffee returns the focus to origin."
+
+  - id: scene_25
+    sequence: 25
+    title: "Outro"
+    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_25 }
+    transition: fade
+    audio_ids: [nar_25]
+
+attribution:
+  - "Historical imagery public domain"

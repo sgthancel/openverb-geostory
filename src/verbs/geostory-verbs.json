@@ -1,0 +1,287 @@
+{
+  "namespace": "geostory",
+  "version": "1.0.0",
+  "description": "GeoStory profile verb library for OpenVerb — geographic narrative actions",
+  "categories": {
+    "playback": "Safe for untrusted documents. Drives rendering: camera, layers, captions, audio, media, basemap, pause.",
+    "authoring": "Editor/AI only. Modifies the document or calls external services. An untrusted document MUST NOT invoke these."
+  },
+  "verbs": [
+    {
+      "name": "geostory.scene",
+      "category": "playback",
+      "description": "Declares a scene — the primary narrative macro. Compiles into atomic verb actions: camera movement, layer toggles, caption display, audio narration, media insets, basemap switches, and pauses.",
+      "params": {
+        "scene_id": { "type": "string", "description": "Scene ID to execute", "required": true },
+        "document": { "type": "object", "description": "The full GeoStoryDocument (needed to resolve references)", "required": true }
+      },
+      "returns": {
+        "actions": { "type": "array", "description": "The compiled verb action sequence" },
+        "duration": { "type": "number", "description": "Authoritative scene duration in seconds" }
+      }
+    },
+    {
+      "name": "geostory.camera.fly_to",
+      "category": "playback",
+      "description": "Animate camera to target coordinates with zoom, bearing, pitch, and easing.",
+      "params": {
+        "center": { "type": "array", "description": "[longitude, latitude]", "required": true },
+        "zoom": { "type": "number", "description": "Target zoom level", "required": false },
+        "bearing": { "type": "number", "description": "Target bearing in degrees", "required": false },
+        "pitch": { "type": "number", "description": "Target pitch in degrees", "required": false },
+        "duration": { "type": "number", "description": "Animation duration in milliseconds", "required": false },
+        "easing": { "type": "string", "description": "Easing function", "required": false, "enum": ["linear", "ease-in", "ease-out", "ease-in-out"] }
+      },
+      "returns": {
+        "completed": { "type": "boolean", "description": "Whether the animation completed" }
+      }
+    },
+    {
+      "name": "geostory.camera.set",
+      "category": "playback",
+      "description": "Instantly set camera position without animation.",
+      "params": {
+        "center": { "type": "array", "description": "[longitude, latitude]", "required": true },
+        "zoom": { "type": "number", "description": "Zoom level", "required": false },
+        "bearing": { "type": "number", "description": "Bearing in degrees", "required": false },
+        "pitch": { "type": "number", "description": "Pitch in degrees", "required": false }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.camera.frame",
+      "category": "playback",
+      "description": "Fit camera to a bounding box or feature extent. Preferred over fly_to for anything larger than a city — bounds survive aspect-ratio changes, a zoom number does not.",
+      "params": {
+        "bounds": { "type": "array", "description": "[[west, south], [east, north]]", "required": true },
+        "padding": { "type": "number", "description": "Padding as fraction of extent (0–1)", "required": false },
+        "duration": { "type": "number", "description": "Animation duration in milliseconds", "required": false },
+        "easing": { "type": "string", "description": "Easing function", "required": false, "enum": ["linear", "ease-in", "ease-out", "ease-in-out"] }
+      },
+      "returns": {
+        "fitted_zoom": { "type": "number", "description": "The zoom level computed from the bounds and viewport" }
+      }
+    },
+    {
+      "name": "geostory.camera.keyframe",
+      "category": "playback",
+      "description": "Place a camera pose at a specific time on the document-absolute timeline. Used within camera tracks for sub-scene animation.",
+      "params": {
+        "at": { "type": "number", "description": "Time in seconds (document-absolute)", "required": true },
+        "center": { "type": "array", "description": "[longitude, latitude]", "required": false },
+        "zoom": { "type": "number", "description": "Zoom level", "required": false },
+        "bearing": { "type": "number", "description": "Bearing in degrees", "required": false },
+        "pitch": { "type": "number", "description": "Pitch in degrees", "required": false },
+        "easing": { "type": "string", "description": "Easing to this keyframe", "required": false, "enum": ["linear", "ease-in", "ease-out", "ease-in-out"] },
+        "locked": { "type": "boolean", "description": "If true, preserved during rescaling", "required": false }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.layer.show",
+      "category": "playback",
+      "description": "Make a data layer visible, optionally with style overrides.",
+      "params": {
+        "id": { "type": "string", "description": "Layer ID from the layers registry", "required": true },
+        "style": { "type": "object", "description": "Optional style overrides", "required": false }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.layer.hide",
+      "category": "playback",
+      "description": "Hide a data layer.",
+      "params": {
+        "id": { "type": "string", "description": "Layer ID from the layers registry", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.annotation.show",
+      "category": "playback",
+      "description": "Display an annotation (circle, polygon, line, or marker) from the annotations registry.",
+      "params": {
+        "id": { "type": "string", "description": "Annotation ID from the registry", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.annotation.hide",
+      "category": "playback",
+      "description": "Hide an annotation.",
+      "params": {
+        "id": { "type": "string", "description": "Annotation ID to hide", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.caption.show",
+      "category": "playback",
+      "description": "Display a text caption on screen.",
+      "params": {
+        "text": { "type": "string", "description": "Caption text", "required": true },
+        "position": { "type": "string", "description": "Screen position", "required": false, "enum": ["top", "center", "bottom", "top_left", "top_right", "bottom_left", "bottom_right"] },
+        "duration": { "type": "number", "description": "Display duration in seconds (omit for indefinite)", "required": false },
+        "style": { "type": "string", "description": "Style preset name", "required": false }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.caption.hide",
+      "category": "playback",
+      "description": "Hide the active caption.",
+      "params": {},
+      "returns": {}
+    },
+    {
+      "name": "geostory.audio.clip",
+      "category": "playback",
+      "description": "Place one audio clip at a time on the timeline. The fundamental audio verb — narrate and music are sugar over this.",
+      "params": {
+        "id": { "type": "string", "description": "Audio clip ID from the audio registry", "required": true },
+        "src": { "type": "string", "description": "Audio source URL or path", "required": true },
+        "at": { "type": "number", "description": "Start time (document-absolute seconds)", "required": true },
+        "duration": { "type": "number", "description": "Clip duration in seconds", "required": true },
+        "gain_db": { "type": "number", "description": "Gain adjustment in dB", "required": false },
+        "duck": { "type": "boolean", "description": "Whether to duck under narration", "required": false }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.audio.narrate",
+      "category": "playback",
+      "description": "Play a narration audio clip. Sugar over audio.clip with kind=narration semantics.",
+      "params": {
+        "clip_id": { "type": "string", "description": "Audio clip ID from the audio registry", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.audio.music",
+      "category": "playback",
+      "description": "Set background music. Sugar over audio.clip with ducking enabled by default.",
+      "params": {
+        "clip_id": { "type": "string", "description": "Audio clip ID from the audio registry", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.media.show",
+      "category": "playback",
+      "description": "Display an image or video as an inset over the map. The map continues moving underneath.",
+      "params": {
+        "id": { "type": "string", "description": "Media item ID from the media registry", "required": true },
+        "placement": { "type": "string", "description": "Screen placement", "required": false, "enum": ["top_left", "top_right", "bottom_left", "bottom_right", "full"] }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.media.hide",
+      "category": "playback",
+      "description": "Remove a media inset.",
+      "params": {
+        "id": { "type": "string", "description": "Media item ID to hide", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.basemap.set",
+      "category": "playback",
+      "description": "Switch the basemap tile layer.",
+      "params": {
+        "id": { "type": "string", "description": "Basemap identifier (e.g. 'carto-dark', 'arcgis-satellite', 'osm')", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.pause",
+      "category": "playback",
+      "description": "Insert a timed pause. The map holds its current state.",
+      "params": {
+        "duration": { "type": "number", "description": "Pause duration in seconds", "required": true }
+      },
+      "returns": {}
+    },
+    {
+      "name": "geostory.place.resolve",
+      "category": "authoring",
+      "description": "Geocode a place name and write the result into the document's places registry. An AUTHORING verb — never called during playback. Geocoding is an authoring step whose output is committed to the file.",
+      "params": {
+        "as_written": { "type": "string", "description": "The place name as written in narration", "required": true },
+        "context": { "type": "object", "description": "Geographic context for disambiguation (e.g. primary country, scope)", "required": false },
+        "provider": { "type": "string", "description": "Geocoding provider to use", "required": false, "enum": ["nominatim", "opencage", "google", "mapbox"] }
+      },
+      "returns": {
+        "place": { "type": "object", "description": "The resolved GeoStoryPlace object" }
+      },
+      "destructive": false,
+      "requires_confirmation": false
+    },
+    {
+      "name": "geostory.timing.fit",
+      "category": "authoring",
+      "description": "Rescale the timeline to measured narration durations. Applies the rescaling rules: unlocked keyframes scale proportionally, locked keyframes are preserved. An AUTHORING verb.",
+      "params": {
+        "scene_id": { "type": "string", "description": "Scene ID to rescale, or omit for all scenes", "required": false }
+      },
+      "returns": {
+        "scenes_updated": { "type": "number", "description": "Number of scenes rescaled" },
+        "total_duration": { "type": "number", "description": "New total story duration" }
+      },
+      "destructive": false,
+      "requires_confirmation": false
+    },
+    {
+      "name": "geostory.render",
+      "category": "authoring",
+      "description": "Render the story to a video file.",
+      "params": {
+        "format": { "type": "string", "description": "Output format", "required": false, "enum": ["mp4", "webm"] },
+        "resolution": { "type": "string", "description": "Output resolution", "required": false, "enum": ["720p", "1080p", "4k"] },
+        "fps": { "type": "number", "description": "Frames per second", "required": false },
+        "output": { "type": "string", "description": "Output file path", "required": false }
+      },
+      "returns": {
+        "path": { "type": "string", "description": "Path to the rendered video file" },
+        "duration": { "type": "number", "description": "Video duration in seconds" },
+        "size_bytes": { "type": "number", "description": "File size in bytes" }
+      },
+      "destructive": false,
+      "requires_confirmation": true
+    },
+    {
+      "name": "geostory.publish",
+      "category": "authoring",
+      "description": "Publish the rendered story to a platform.",
+      "params": {
+        "platform": { "type": "string", "description": "Target platform", "required": true, "enum": ["youtube", "web", "embed"] },
+        "title": { "type": "string", "description": "Publication title", "required": false },
+        "description": { "type": "string", "description": "Publication description", "required": false }
+      },
+      "returns": {
+        "url": { "type": "string", "description": "Published URL" }
+      },
+      "destructive": false,
+      "requires_confirmation": true
+    },
+    {
+      "name": "geostory.export.kit",
+      "category": "authoring",
+      "description": "Produce publishing artifacts — thumbnail, description with chapters and attribution, tags — without connecting an account. Separates artifact production from OAuth-gated publishing.",
+      "params": {
+        "include_thumbnail": { "type": "boolean", "description": "Generate a thumbnail image", "required": false },
+        "include_chapters": { "type": "boolean", "description": "Generate chapter markers from scene titles", "required": false },
+        "include_attribution": { "type": "boolean", "description": "Include full attribution text", "required": false },
+        "include_tags": { "type": "boolean", "description": "Generate suggested tags from story content", "required": false }
+      },
+      "returns": {
+        "thumbnail_path": { "type": "string", "description": "Path to generated thumbnail" },
+        "description": { "type": "string", "description": "Formatted description with chapters and attribution" },
+        "tags": { "type": "array", "description": "Suggested tags" },
+        "chapters": { "type": "array", "description": "Chapter markers with timestamps" }
+      },
+      "destructive": false,
+      "requires_confirmation": false
+    }
+  ]
+}

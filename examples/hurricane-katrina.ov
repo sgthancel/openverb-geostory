@@ -1,0 +1,314 @@
+# GeoStory Example: Hurricane Katrina
+# 5 scenes, ~46 seconds
+# Demonstrates: bounds-based framing, resolved places, audio clips,
+#   media insets, camera keyframes, basemap switches, layer toggles
+
+name: hurricane-katrina
+version: 1.0.0
+profile: geostory
+description: A geographic narrative of Hurricane Katrina's path and impact
+
+story:
+  title: "Hurricane Katrina"
+  author: "GeoStudio"
+  crs: "EPSG:4326"
+  created: "2026-08-19T21:00:00Z"
+  tags: ["hurricane", "disaster", "gulf-coast", "2005"]
+  thumbnail: media/cover.jpg
+
+# ─── TOP-LEVEL PLACES REGISTRY ───
+
+places:
+  - id: pl_bahamas
+    as_written: "the Bahamas"
+    resolved:
+      name: "The Bahamas"
+      point: [-75.1, 23.5]
+      bounds: [[-80.47, 20.91], [-72.71, 27.26]]
+      kind: country
+      provider: nominatim
+      resolved_at: "2026-08-19T21:57:00Z"
+      confidence: 0.92
+
+  - id: pl_south_florida
+    as_written: "southern Florida"
+    resolved:
+      name: "South Florida"
+      point: [-80.1, 25.9]
+      bounds: [[-81.80, 24.39], [-79.97, 26.95]]
+      kind: region
+      provider: nominatim
+      resolved_at: "2026-08-19T21:57:00Z"
+      confidence: 0.88
+
+  - id: pl_gulf
+    as_written: "the Gulf"
+    resolved:
+      name: "Gulf of Mexico"
+      point: [-87.7, 26.3]
+      bounds: [[-98.0, 18.0], [-80.0, 30.5]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-19T21:57:00Z"
+      confidence: 0.90
+
+  - id: pl_new_orleans
+    as_written: "New Orleans"
+    resolved:
+      name: "New Orleans, Louisiana"
+      point: [-90.07, 29.95]
+      bounds: [[-90.14, 29.87], [-89.63, 30.20]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-19T21:57:00Z"
+      confidence: 0.95
+
+# ─── AUDIO TRACK (document-absolute) ───
+
+audio:
+  - id: nar_001
+    kind: narration
+    src: audio/scene_001.wav
+    at: 0.0
+    duration: 6.57
+    gain_db: 0.0
+    text: "On August 23, 2005, Tropical Depression Twelve formed over the southeastern Bahamas."
+
+  - id: nar_002
+    kind: narration
+    src: audio/scene_002.wav
+    at: 6.57
+    duration: 8.20
+    gain_db: 0.0
+    text: "Katrina crossed southern Florida as a Category 1 hurricane, causing flooding and widespread power outages."
+
+  - id: nar_003
+    kind: narration
+    src: audio/scene_003.wav
+    at: 14.77
+    duration: 10.30
+    gain_db: 0.0
+    text: "Over the exceptionally warm waters of the Gulf of Mexico, Katrina underwent rapid intensification, reaching Category 5 strength."
+
+  - id: nar_004
+    kind: narration
+    src: audio/scene_004.wav
+    at: 25.07
+    duration: 12.80
+    gain_db: 0.0
+    text: "Katrina made landfall near Buras, Louisiana on August 29. The catastrophic failure of the levee system led to eighty percent of New Orleans being submerged."
+
+  - id: nar_005
+    kind: narration
+    src: audio/scene_005.wav
+    at: 37.87
+    duration: 8.40
+    gain_db: 0.0
+    text: "Over 1,800 lives were lost. Damages exceeded 125 billion dollars, making Katrina the costliest natural disaster in United States history at the time."
+
+  - id: bed_001
+    kind: music
+    src: audio/atmospheric-bed.mp3
+    at: 0.0
+    duration: 46.27
+    gain_db: -18.0
+    duck: true
+
+# ─── MEDIA TRACK (document-absolute) ───
+
+media:
+  - id: img_flooding
+    kind: image
+    src: media/satellite-flooding.jpg
+    at: 28.0
+    until: 38.0
+    placement: top_right
+    caption: "MODIS satellite imagery of New Orleans flooding"
+    origin: satellite
+    credit: "NASA/MODIS"
+
+# ─── LAYERS ───
+
+layers:
+  - id: flood_extent
+    name: "Flood Extent"
+    type: geojson
+    source: layers/flood-extent.geojson
+    style:
+      fill_color: "rgba(0, 100, 255, 0.3)"
+      stroke_color: "#0064ff"
+      stroke_width: 1.5
+    visible: false
+
+  - id: storm_track
+    name: "Storm Track"
+    type: geojson
+    source: layers/storm-track.geojson
+    style:
+      stroke_color: "#ff4444"
+      stroke_width: 3
+      stroke_dasharray: "8,4"
+    visible: false
+
+# ─── SCENES ───
+
+scenes:
+  - id: scene_001
+    sequence: 1
+    title: "Formation"
+    place_id: pl_bahamas
+    camera:
+      mode: 2d
+      frame:
+        bounds: [[-80.47, 20.91], [-72.71, 27.26]]
+        padding: 0.18
+      center: [-75.1, 23.5]
+      zoom: 6
+    content:
+      caption: "Tropical Depression Twelve forms over the southeastern Bahamas."
+      narration: "On August 23, 2005, Tropical Depression Twelve formed over the southeastern Bahamas."
+    timing:
+      mode: derived
+      intended: 8
+      measured: 6.57
+      source: nar_001
+    transition: cut
+    basemap: carto-dark
+    timestamp: "2005-08-23T00:00:00Z"
+    audio_ids:
+      - nar_001
+    media_ids: []
+
+  - id: scene_002
+    sequence: 2
+    title: "Category 1 — Florida Landfall"
+    place_id: pl_south_florida
+    camera:
+      mode: 2d
+      frame:
+        bounds: [[-81.80, 24.39], [-79.97, 26.95]]
+        padding: 0.15
+      center: [-80.1, 25.9]
+      zoom: 7
+    content:
+      caption: "Katrina makes landfall in southern Florida as a Category 1 hurricane."
+      narration: "Katrina crossed southern Florida as a Category 1 hurricane, causing flooding and widespread power outages."
+    timing:
+      mode: derived
+      intended: 10
+      measured: 8.20
+      source: nar_002
+    transition: fly
+    layers_visible:
+      - storm_track
+    timestamp: "2005-08-25T22:30:00Z"
+    audio_ids:
+      - nar_002
+    media_ids: []
+
+  - id: scene_003
+    sequence: 3
+    title: "Rapid Intensification"
+    place_id: pl_gulf
+    camera:
+      mode: 2d
+      frame:
+        bounds: [[-98.0, 18.0], [-80.0, 30.5]]
+        padding: 0.10
+      center: [-87.7, 26.3]
+      zoom: 5
+    content:
+      caption: "Over the warm Gulf waters, Katrina rapidly intensifies to Category 5."
+      narration: "Over the exceptionally warm waters of the Gulf of Mexico, Katrina underwent rapid intensification, reaching Category 5 strength."
+    timing:
+      mode: derived
+      intended: 12
+      measured: 10.30
+      source: nar_003
+    transition: fly
+    basemap: arcgis-satellite
+    timestamp: "2005-08-28T12:00:00Z"
+    audio_ids:
+      - nar_003
+    media_ids: []
+
+  - id: scene_004
+    sequence: 4
+    title: "Landfall — New Orleans"
+    place_id: pl_new_orleans
+    camera:
+      mode: 2d
+      frame:
+        bounds: [[-90.14, 29.87], [-89.63, 30.20]]
+        padding: 0.10
+      center: [-90.07, 29.95]
+      zoom: 9
+      track:
+        - at: 25.07
+          center: [-90.07, 29.95]
+          zoom: 9
+        - at: 28.00
+          center: [-90.07, 29.95]
+          zoom: 11
+          easing: ease-in-out
+          locked: false
+        - at: 35.00
+          center: [-89.95, 29.98]
+          zoom: 12
+          easing: ease-out
+          locked: true
+    content:
+      caption: "Katrina makes landfall near Buras, Louisiana. The levees fail. New Orleans floods."
+      narration: "Katrina made landfall near Buras, Louisiana on August 29. The catastrophic failure of the levee system led to eighty percent of New Orleans being submerged."
+    timing:
+      mode: derived
+      intended: 15
+      measured: 12.80
+      source: nar_004
+    transition: dissolve
+    basemap: arcgis-satellite
+    layers_visible:
+      - flood_extent
+    timestamp: "2005-08-29T11:10:00Z"
+    audio_ids:
+      - nar_004
+    media_ids:
+      - img_flooding
+
+  - id: scene_005
+    sequence: 5
+    title: "Aftermath"
+    place_id: pl_new_orleans
+    camera:
+      mode: 2d
+      center: [-90.07, 29.95]
+      zoom: 11
+    content:
+      caption: "Over 1,800 lives lost. $125 billion in damage. The costliest natural disaster in U.S. history."
+      narration: "Over 1,800 lives were lost. Damages exceeded 125 billion dollars, making Katrina the costliest natural disaster in United States history at the time."
+    timing:
+      mode: derived
+      intended: 10
+      measured: 8.40
+      source: nar_005
+    transition: fade
+    audio_ids:
+      - nar_005
+    media_ids: []
+
+# ─── ATTRIBUTION (required) ───
+
+attribution:
+  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, Maxar, Earthstar Geographics"
+  - "NASA/MODIS"
+
+# ─── SETTINGS ───
+
+settings:
+  default_basemap: carto-dark
+  default_transition: fly
+  default_duration: 8
+  auto_narration: true
+  loop: false
+  camera_3d_degradation: 3d_degradation_wide_shot

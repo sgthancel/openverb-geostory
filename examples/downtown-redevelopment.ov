@@ -1,0 +1,88 @@
+name: downtown-redevelopment
+version: 1.0.0
+profile: geostory
+story:
+  title: "Downtown Redevelopment Initiative"
+  author: "Urban Planning Department"
+  crs: "EPSG:4326"
+
+places:
+  - id: pl_downtown
+    as_written: "Downtown Sector"
+    resolved:
+      name: "Downtown, Metro City"
+      point: [-122.4194, 37.7749]
+      bounds: [[-122.43, 37.76], [-122.40, 37.79]]
+      kind: landmark
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.98
+
+audio:
+  - id: nar_01
+    kind: narration
+    src: "audio/plan-01.mp3"
+    at: 0.0
+    duration: 10.5
+  - id: nar_02
+    kind: narration
+    src: "audio/plan-02.mp3"
+    at: 10.5
+    duration: 15.0
+
+media:
+  - id: img_render
+    kind: image
+    src: "media/future-render.jpg"
+    at: 10.5
+    placement: full
+    origin: upload
+    caption: "Architectural render of the new transit hub"
+
+layers:
+  - id: zoning
+    name: "New Zoning Map"
+    type: geojson
+    source: "layers/zoning-2026.geojson"
+    visible: false
+
+scenes:
+  - id: sc_01
+    sequence: 1
+    title: "Current Footprint"
+    place_id: pl_downtown
+    timing:
+      mode: derived
+      intended: 12
+      measured: 10.5
+      source: nar_01
+    camera:
+      mode: 3d
+      frame:
+        bounds: [[-122.43, 37.76], [-122.40, 37.79]]
+    transition: fly
+    audio_ids: [nar_01]
+    content:
+      caption: "The current footprint of the downtown sector."
+
+  - id: sc_02
+    sequence: 2
+    title: "Future Zoning"
+    place_id: pl_downtown
+    timing:
+      mode: derived
+      intended: 15
+      measured: 15.0
+      source: nar_02
+    camera:
+      mode: 3d
+      center: [-122.4194, 37.7749]
+      zoom: 15
+    transition: dissolve
+    layers_visible: [zoning]
+    audio_ids: [nar_02]
+    media_ids: [img_render]
+    content:
+      caption: "Proposed transit hub and rezoning boundaries."
+
+attribution: []
