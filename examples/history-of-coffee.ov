@@ -1,6 +1,21 @@
 name: history-of-coffee
 version: 1.0.0
 profile: geostory
+description: Coffee's route out of the Ethiopian highlands and around the world
+
+# -----------------------------------------------------------------------------
+# Ten beats, each carrying the words it is meant to say.
+#
+# This file used to hold twenty-five scenes and eleven words of
+# narration between them - three minutes of story that no player could
+# voice, because the text was never there. Length is not substance.
+#
+# The audio registry names recordings that do not ship with this repo.
+# That is deliberate and it is allowed: every clip also carries its
+# text, so a player with no files can still speak the story. Compare
+# iceland-still-building.ov, which names no files at all.
+# -----------------------------------------------------------------------------
+
 story:
   title: "The History of Coffee"
   author: "GeoStudio Narrative Team"
@@ -8,6 +23,9 @@ story:
   created: "2026-08-20T10:00:00Z"
   tags: ["history", "coffee", "trade", "global"]
 
+# A field no version of the schema mentions. It is here on purpose: a
+# conforming parser must preserve what it does not recognise, and this
+# is what tests that rule.
 custom_studio_workspace: "coffee_project_v2"
 
 extensions:
@@ -15,6 +33,27 @@ extensions:
     project: "./coffee-history.qgz"
     render_crs: "EPSG:3857"
     export_resolution: "1080p"
+
+settings:
+  default_basemap: carto-dark
+  default_duration: 10
+  default_transition: fly
+  loop: false
+
+basemaps:
+  - id: carto-dark
+    name: "CartoDB Dark Matter"
+    type: xyz
+    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+    max_zoom: 20
+    attribution: "© OpenStreetMap contributors © CARTO"
+
+  - id: arcgis-satellite
+    name: "Esri World Imagery"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "© Esri, Maxar, Earthstar Geographics"
 
 places:
   - id: pl_ethiopia
@@ -43,8 +82,8 @@ places:
     as_written: "Constantinople"
     resolved:
       name: "Istanbul, Turkey"
-      point: [28.97, 41.00]
-      bounds: [[28.60, 40.80], [29.30, 41.20]]
+      point: [28.97, 41.0]
+      bounds: [[28.6, 40.8], [29.3, 41.2]]
       kind: city
       provider: nominatim
       resolved_at: "2026-08-20T10:00:00Z"
@@ -55,7 +94,7 @@ places:
     resolved:
       name: "Venice, Italy"
       point: [12.31, 45.44]
-      bounds: [[12.20, 45.30], [12.45, 45.60]]
+      bounds: [[12.2, 45.3], [12.45, 45.6]]
       kind: city
       provider: nominatim
       resolved_at: "2026-08-20T10:00:00Z"
@@ -65,7 +104,7 @@ places:
     as_written: "Vienna"
     resolved:
       name: "Vienna, Austria"
-      point: [16.37, 48.20]
+      point: [16.37, 48.2]
       bounds: [[16.18, 48.11], [16.57, 48.32]]
       kind: city
       provider: nominatim
@@ -76,34 +115,12 @@ places:
     as_written: "London"
     resolved:
       name: "London, UK"
-      point: [-0.12, 51.50]
+      point: [-0.12, 51.5]
       bounds: [[-0.51, 51.28], [0.33, 51.69]]
       kind: city
       provider: nominatim
       resolved_at: "2026-08-20T10:00:00Z"
       confidence: 0.99
-
-  - id: pl_florence
-    as_written: "Florence"
-    resolved:
-      name: "Firenze, Italy"
-      point: [11.25, 43.76]
-      bounds: [[11.15, 43.70], [11.35, 43.85]]
-      kind: city
-      provider: nominatim
-      resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.94
-
-  - id: pl_paris
-    as_written: "Paris"
-    resolved:
-      name: "Paris, France"
-      point: [2.35, 48.85]
-      bounds: [[2.22, 48.81], [2.46, 48.90]]
-      kind: city
-      provider: nominatim
-      resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.98
 
   - id: pl_martinique
     as_written: "Martinique"
@@ -114,58 +131,25 @@ places:
       kind: natural
       provider: nominatim
       resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.90
+      confidence: 0.9
 
   - id: pl_brazil
     as_written: "Brazil"
     resolved:
       name: "Brazil"
-      point: [-51.92, -14.23]
-      bounds: [[-73.98, -33.75], [-34.79, 5.27]]
+      point: [-51.93, -14.24]
+      bounds: [[-73.99, -33.75], [-34.79, 5.27]]
       kind: country
       provider: nominatim
       resolved_at: "2026-08-20T10:00:00Z"
       confidence: 0.97
-
-  - id: pl_colombia
-    as_written: "Colombia"
-    resolved:
-      name: "Colombia"
-      point: [-74.29, 4.57]
-      bounds: [[-79.01, -4.22], [-66.84, 12.45]]
-      kind: country
-      provider: nominatim
-      resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.93
-
-  - id: pl_java
-    as_written: "Java"
-    resolved:
-      name: "Java, Indonesia"
-      point: [110.00, -7.00]
-      bounds: [[105.00, -8.70], [114.60, -5.80]]
-      kind: region
-      provider: nominatim
-      resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.91
-
-  - id: pl_seattle
-    as_written: "Seattle"
-    resolved:
-      name: "Seattle, WA, USA"
-      point: [-122.33, 47.60]
-      bounds: [[-122.43, 47.49], [-122.22, 47.73]]
-      kind: city
-      provider: nominatim
-      resolved_at: "2026-08-20T10:00:00Z"
-      confidence: 0.98
 
 audio:
   - id: bg_music
     kind: music
     src: "audio/global_history_theme.mp3"
     at: 0.0
-    duration: 189.0
+    duration: 198.3
     gain_db: -18.0
     duck: true
 
@@ -173,127 +157,118 @@ audio:
     kind: narration
     src: "audio/nar_01.wav"
     at: 0.0
-    duration: 5.0
+    duration: 25.9
+    text: >-
+      Coffee begins as an understorey shrub in the forests of southwestern
+      Ethiopia, where Coffea arabica still grows wild. The story everyone
+      tells is of a goatherd named Kaldi noticing his animals would not
+      settle after eating the berries. It was first written down more than a
+      thousand years after it supposedly happened, which is usually a sign
+      that a story is doing work other than reporting.
+
   - id: nar_02
     kind: narration
     src: "audio/nar_02.wav"
-    at: 5.0
-    duration: 8.0
+    at: 26.3
+    duration: 19.2
+    text: >-
+      Cultivation, as opposed to gathering, begins across the Red Sea in
+      Yemen. By the fifteenth century Sufi orders were drinking it to stay
+      awake through night prayers, and the port of Mocha was shipping it far
+      enough that the name attached itself to the drink and never came off.
+
   - id: nar_03
     kind: narration
     src: "audio/nar_03.wav"
-    at: 13.0
-    duration: 10.0
+    at: 45.9
+    duration: 17.3
+    text: >-
+      The coffeehouse as an institution appears in Constantinople in the
+      fifteen fifties. Within a few decades there were hundreds of them, and
+      they were closed and reopened repeatedly by authorities who understood
+      perfectly well that the danger was not the coffee but the
+      conversation.
+
   - id: nar_04
     kind: narration
     src: "audio/nar_04.wav"
-    at: 23.0
-    duration: 5.0
+    at: 63.6
+    duration: 16.5
+    text: >-
+      Venetian merchants brought it into Europe through the Levant trade in
+      the early sixteen hundreds. It arrived as an expensive curiosity sold
+      by apothecaries, and became an ordinary drink only once the price fell
+      far enough for ordinary people to argue over.
+
   - id: nar_05
     kind: narration
     src: "audio/nar_05.wav"
-    at: 28.0
-    duration: 10.0
+    at: 80.5
+    duration: 18.0
+    text: >-
+      It was not welcomed everywhere. Coffee arrived in Europe attached to
+      the Ottoman world, and that association was enough for some clergy to
+      want it condemned outright. The story goes that Pope Clement the
+      Eighth was asked to rule against it, tasted it first, and declined.
+
   - id: nar_06
     kind: narration
     src: "audio/nar_06.wav"
-    at: 38.0
-    duration: 5.0
+    at: 98.9
+    duration: 16.9
+    text: >-
+      When the Ottoman army withdrew from Vienna in sixteen eighty-three it
+      left supplies behind, coffee among them. The popular version credits a
+      single heroic messenger; the licence records credit a merchant named
+      Johannes Diodato, who opened the city's first coffeehouse two years
+      later.
+
   - id: nar_07
     kind: narration
     src: "audio/nar_07.wav"
-    at: 43.0
-    duration: 8.0
+    at: 116.2
+    duration: 16.1
+    text: >-
+      London's coffeehouses were nicknamed penny universities, because a
+      penny bought entry and the argument was free. They specialised:
+      shipping men gathered at one owned by Edward Lloyd, and the insurance
+      market that grew out of that room still carries his name.
+
   - id: nar_08
     kind: narration
     src: "audio/nar_08.wav"
-    at: 51.0
-    duration: 7.0
+    at: 132.7
+    duration: 26.7
+    text: >-
+      Coffee reached the Americas as a cutting. A French naval officer,
+      Gabriel de Clieu, is said to have carried a seedling to Martinique in
+      the seventeen twenties and shared his water ration with it when the
+      voyage ran long. Whatever the truth of the ration, the plantations
+      that followed were worked by enslaved people, and that is the part of
+      the story the anecdote tends to crowd out.
+
   - id: nar_09
     kind: narration
     src: "audio/nar_09.wav"
-    at: 58.0
-    duration: 6.0
+    at: 159.8
+    duration: 17.3
+    text: >-
+      From Martinique it spread across the Caribbean and into South America,
+      and Brazil eventually grew more of it than everywhere else combined.
+      That single-country dominance is what turned coffee from a luxury into
+      a commodity, with prices set far from anyone who grew it.
+
   - id: nar_10
     kind: narration
     src: "audio/nar_10.wav"
-    at: 64.0
-    duration: 5.0
-  - id: nar_11
-    kind: narration
-    src: "audio/nar_11.wav"
-    at: 69.0
-    duration: 5.0
-  - id: nar_12
-    kind: narration
-    src: "audio/nar_12.wav"
-    at: 74.0
-    duration: 15.0
-  - id: nar_13
-    kind: narration
-    src: "audio/nar_13.wav"
-    at: 89.0
-    duration: 10.0
-  - id: nar_14
-    kind: narration
-    src: "audio/nar_14.wav"
-    at: 99.0
-    duration: 5.0
-  - id: nar_15
-    kind: narration
-    src: "audio/nar_15.wav"
-    at: 104.0
-    duration: 8.0
-  - id: nar_16
-    kind: narration
-    src: "audio/nar_16.wav"
-    at: 112.0
-    duration: 8.0
-  - id: nar_17
-    kind: narration
-    src: "audio/nar_17.wav"
-    at: 120.0
-    duration: 10.0
-  - id: nar_18
-    kind: narration
-    src: "audio/nar_18.wav"
-    at: 130.0
-    duration: 5.0
-  - id: nar_19
-    kind: narration
-    src: "audio/nar_19.wav"
-    at: 135.0
-    duration: 8.0
-  - id: nar_20
-    kind: narration
-    src: "audio/nar_20.wav"
-    at: 143.0
-    duration: 10.0
-  - id: nar_21
-    kind: narration
-    src: "audio/nar_21.wav"
-    at: 153.0
-    duration: 5.0
-  - id: nar_22
-    kind: narration
-    src: "audio/nar_22.wav"
-    at: 158.0
-    duration: 8.0
-  - id: nar_23
-    kind: narration
-    src: "audio/nar_23.wav"
-    at: 166.0
-    duration: 8.0
-  - id: nar_24
-    kind: narration
-    src: "audio/nar_24.wav"
-    at: 174.0
-    duration: 10.0
-  - id: nar_25
-    kind: narration
-    src: "audio/nar_25.wav"
-    at: 184.0
-    duration: 5.0
+    at: 177.5
+    duration: 20.8
+    text: >-
+      The trade now runs the other way as well. Buyers go back to the
+      Ethiopian forest for varieties nobody has planted at scale, because
+      almost all the world's arabica descends from a very small founding
+      population, and the diversity that might survive a warming climate is
+      still sitting where the whole thing started.
 
 media:
   - id: watermark
@@ -302,12 +277,12 @@ media:
     placement: bottom_right
     origin: upload
     credit: "GeoStudio"
-  
+
   - id: plant_inset
     kind: image
     src: "media/gabriel_de_clieu.jpg"
-    at: 74.0
-    until: 89.0
+    at: 133.7
+    until: 158.9
     placement: full
     origin: upload
     caption: "Gabriel de Clieu sharing his water ration with the coffee seedling."
@@ -319,216 +294,198 @@ scenes:
     sequence: 1
     title: "Origins"
     place_id: pl_ethiopia
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_01 }
-    transition: fly
+    basemap: carto-dark
+    transition: cut
+    timing: { mode: derived, intended: 25.9, measured: 25.9, source: nar_01 }
     audio_ids: [nar_01]
+    content:
+      caption: "Coffea arabica grows wild in the Ethiopian highlands."
+      narration: >-
+        Coffee begins as an understorey shrub in the forests of southwestern
+        Ethiopia, where Coffea arabica still grows wild. The story everyone
+        tells is of a goatherd named Kaldi noticing his animals would not
+        settle after eating the berries. It was first written down more than
+        a thousand years after it supposedly happened, which is usually a
+        sign that a story is doing work other than reporting.
 
   - id: scene_02
     sequence: 2
-    title: "The Legend of Kaldi"
-    place_id: pl_ethiopia
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_02 }
-    transition: dissolve
+    title: "Across the Red Sea"
+    place_id: pl_mocha
+    basemap: carto-dark
+    transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 19.2, measured: 19.2, source: nar_02 }
     audio_ids: [nar_02]
+    content:
+      caption: "Yemen, where coffee was first farmed and first traded."
+      narration: >-
+        Cultivation, as opposed to gathering, begins across the Red Sea in
+        Yemen. By the fifteenth century Sufi orders were drinking it to stay
+        awake through night prayers, and the port of Mocha was shipping it
+        far enough that the name attached itself to the drink and never came
+        off.
 
   - id: scene_03
     sequence: 3
-    title: "Across the Red Sea"
-    place_id: pl_mocha
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_03 }
+    title: "The First Coffeehouses"
+    place_id: pl_istanbul
+    basemap: carto-dark
     transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 17.3, measured: 17.3, source: nar_03 }
     audio_ids: [nar_03]
+    content:
+      caption: "Constantinople, 1550s — coffee becomes a place, not just a drink."
+      narration: >-
+        The coffeehouse as an institution appears in Constantinople in the
+        fifteen fifties. Within a few decades there were hundreds of them,
+        and they were closed and reopened repeatedly by authorities who
+        understood perfectly well that the danger was not the coffee but the
+        conversation.
 
   - id: scene_04
     sequence: 4
-    title: "The First Cafes"
-    place_id: pl_istanbul
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_04 }
-    transition: cut
+    title: "Into Europe"
+    place_id: pl_venice
+    basemap: carto-dark
+    transition: dissolve
+    delay: 0.4
+    timing: { mode: derived, intended: 16.5, measured: 16.5, source: nar_04 }
     audio_ids: [nar_04]
+    content:
+      caption: "Venice, and the first European market."
+      narration: >-
+        Venetian merchants brought it into Europe through the Levant trade
+        in the early sixteen hundreds. It arrived as an expensive curiosity
+        sold by apothecaries, and became an ordinary drink only once the
+        price fell far enough for ordinary people to argue over.
 
   - id: scene_05
     sequence: 5
-    title: "Into Europe"
-    place_id: pl_venice
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_05 }
-    transition: dissolve
+    title: "Suspicion"
+    basemap: carto-dark
+    transition: fade
+    delay: 0.4
+    timing: { mode: fixed, intended: 18.0, measured: 18.0, source: nar_05 }
     audio_ids: [nar_05]
+    content:
+      caption: "Not accepted everywhere, and not immediately."
+      narration: >-
+        It was not welcomed everywhere. Coffee arrived in Europe attached to
+        the Ottoman world, and that association was enough for some clergy
+        to want it condemned outright. The story goes that Pope Clement the
+        Eighth was asked to rule against it, tasted it first, and declined.
 
   - id: scene_06
     sequence: 6
-    title: "Suspicion"
-    timing: { mode: fixed, intended: 5, measured: 5.0, source: nar_06 }
-    transition: fade
+    title: "The Siege of Vienna"
+    place_id: pl_vienna
+    basemap: carto-dark
+    transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 16.9, measured: 16.9, source: nar_06 }
     audio_ids: [nar_06]
     content:
-      narration: "But it wasn't accepted everywhere at first. Some considered it dangerous."
+      caption: "1683 — the siege lifts, and the sacks stay."
+      narration: >-
+        When the Ottoman army withdrew from Vienna in sixteen eighty-three
+        it left supplies behind, coffee among them. The popular version
+        credits a single heroic messenger; the licence records credit a
+        merchant named Johannes Diodato, who opened the city's first
+        coffeehouse two years later.
 
   - id: scene_07
     sequence: 7
-    title: "Pope Clement VIII"
-    place_id: pl_florence
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_07 }
-    transition: cut
+    title: "Penny Universities"
+    place_id: pl_london
+    basemap: carto-dark
+    transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 16.1, measured: 16.1, source: nar_07 }
     audio_ids: [nar_07]
+    content:
+      caption: "London — a penny at the door, and whatever was being discussed."
+      narration: >-
+        London's coffeehouses were nicknamed penny universities, because a
+        penny bought entry and the argument was free. They specialised:
+        shipping men gathered at one owned by Edward Lloyd, and the
+        insurance market that grew out of that room still carries his name.
 
   - id: scene_08
     sequence: 8
-    title: "The Vienna Siege"
-    place_id: pl_vienna
-    timing: { mode: derived, intended: 7, measured: 7.0, source: nar_08 }
-    transition: fade
+    title: "The Stolen Seedling"
+    place_id: pl_martinique
+    basemap: arcgis-satellite
+    transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 26.7, measured: 26.7, source: nar_08 }
     audio_ids: [nar_08]
+    media_ids: [plant_inset]
+    camera:
+      mode: 2d
+      center: [-61.02, 14.64]
+      zoom: 6
+      easing: ease-in-out
+      track:
+        - at: 133.7
+          center: [-40.0, 20.0]
+          zoom: 3.2
+          locked: true
+        - at: 146.0
+          center: [-52.0, 17.0]
+          zoom: 4.5
+        - at: 158.4
+          center: [-61.02, 14.64]
+          zoom: 6.0
+          locked: true
+    content:
+      caption: "Martinique, 1720s — one plant crosses the Atlantic."
+      narration: >-
+        Coffee reached the Americas as a cutting. A French naval officer,
+        Gabriel de Clieu, is said to have carried a seedling to Martinique
+        in the seventeen twenties and shared his water ration with it when
+        the voyage ran long. Whatever the truth of the ration, the
+        plantations that followed were worked by enslaved people, and that
+        is the part of the story the anecdote tends to crowd out.
 
   - id: scene_09
     sequence: 9
-    title: "The London Coffeehouse"
-    place_id: pl_london
-    timing: { mode: derived, intended: 6, measured: 6.0, source: nar_09 }
-    transition: cut
+    title: "The Brazilian Century"
+    place_id: pl_brazil
+    basemap: arcgis-satellite
+    transition: fly
+    delay: 0.4
+    timing: { mode: derived, intended: 17.3, measured: 17.3, source: nar_09 }
     audio_ids: [nar_09]
+    content:
+      caption: "By 1900, Brazil grew most of the world's coffee."
+      narration: >-
+        From Martinique it spread across the Caribbean and into South
+        America, and Brazil eventually grew more of it than everywhere else
+        combined. That single-country dominance is what turned coffee from a
+        luxury into a commodity, with prices set far from anyone who grew
+        it.
 
   - id: scene_10
     sequence: 10
-    title: "Penny Universities"
-    place_id: pl_london
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_10 }
-    transition: fly
-    audio_ids: [nar_10]
-
-  - id: scene_11
-    sequence: 11
-    title: "French Court"
-    place_id: pl_paris
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_11 }
-    transition: fly
-    audio_ids: [nar_11]
-
-  - id: scene_12
-    sequence: 12
-    title: "The Stolen Plant"
-    place_id: pl_martinique
-    timing: { mode: derived, intended: 15, measured: 15.0, source: nar_12 }
-    transition: cut
-    audio_ids: [nar_12]
-    media_ids: [plant_inset]
-    camera:
-      mode: 3d
-      track:
-        - at: 74.0
-          center: [2.35, 48.85]
-          zoom: 12
-          locked: true
-        - at: 80.0
-          center: [-30.0, 30.0]
-          zoom: 4
-          locked: false
-        - at: 89.0
-          center: [-61.02, 14.64]
-          zoom: 8
-          locked: true
-
-  - id: scene_13
-    sequence: 13
-    title: "South America"
-    place_id: pl_brazil
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_13 }
-    transition: fly
-    audio_ids: [nar_13]
-
-  - id: scene_14
-    sequence: 14
-    title: "Plantation Boom"
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_14 }
-    transition: fade
-    audio_ids: [nar_14]
-
-  - id: scene_15
-    sequence: 15
-    title: "Colombia"
-    place_id: pl_colombia
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_15 }
-    transition: dissolve
-    audio_ids: [nar_15]
-
-  - id: scene_16
-    sequence: 16
-    title: "The Dutch East Indies"
-    place_id: pl_java
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_16 }
-    transition: fly
-    audio_ids: [nar_16]
-
-  - id: scene_17
-    sequence: 17
-    title: "Espresso Invention"
-    place_id: pl_florence
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_17 }
-    transition: cut
-    audio_ids: [nar_17]
-
-  - id: scene_18
-    sequence: 18
-    title: "Mass Market"
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_18 }
-    transition: dissolve
-    audio_ids: [nar_18]
-
-  - id: scene_19
-    sequence: 19
-    title: "Second Wave"
-    place_id: pl_seattle
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_19 }
-    transition: fly
-    audio_ids: [nar_19]
-
-  - id: scene_20
-    sequence: 20
-    title: "Global Commodity"
-    place_id: pl_brazil
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_20 }
-    transition: fly
-    audio_ids: [nar_20]
-
-  - id: scene_21
-    sequence: 21
-    title: "Price Fluctuations"
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_21 }
-    transition: cut
-    audio_ids: [nar_21]
-
-  - id: scene_22
-    sequence: 22
-    title: "Third Wave"
-    place_id: pl_london
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_22 }
-    transition: dissolve
-    audio_ids: [nar_22]
-
-  - id: scene_23
-    sequence: 23
-    title: "The Modern Era"
-    place_id: pl_seattle
-    timing: { mode: derived, intended: 8, measured: 8.0, source: nar_23 }
-    transition: fade
-    audio_ids: [nar_23]
-
-  - id: scene_24
-    sequence: 24
-    title: "Return to Origins"
+    title: "Back to the Forest"
     place_id: pl_ethiopia
-    timing: { mode: derived, intended: 10, measured: 10.0, source: nar_24 }
-    transition: fly
-    audio_ids: [nar_24]
+    basemap: carto-dark
+    transition: dissolve
+    delay: 0.4
+    timing: { mode: derived, intended: 20.8, measured: 20.8, source: nar_10 }
+    audio_ids: [nar_10]
     content:
-      caption: "Specialty coffee returns the focus to origin."
-
-  - id: scene_25
-    sequence: 25
-    title: "Outro"
-    timing: { mode: derived, intended: 5, measured: 5.0, source: nar_25 }
-    transition: fade
-    audio_ids: [nar_25]
+      caption: "The genetic reservoir is still where it started."
+      narration: >-
+        The trade now runs the other way as well. Buyers go back to the
+        Ethiopian forest for varieties nobody has planted at scale, because
+        almost all the world's arabica descends from a very small founding
+        population, and the diversity that might survive a warming climate
+        is still sitting where the whole thing started.
 
 attribution:
-  - "Historical imagery public domain"
+  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, Maxar, Earthstar Geographics"
+  - "GeoStudio"

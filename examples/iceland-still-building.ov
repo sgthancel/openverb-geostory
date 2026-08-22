@@ -1,0 +1,352 @@
+name: iceland-still-building
+version: 1.0.0
+profile: geostory
+description: A country being built in real time, told along the Mid-Atlantic Ridge
+
+# ─────────────────────────────────────────────────────────────────────────────
+# This document carries everything it needs and points at nothing outside
+# itself. No .wav files, no images, no data layers - just words, coordinates,
+# and the tile servers to draw them on.
+#
+# That is the shape a GeoStory should usually take. Narration lives in
+# scenes[].content.narration as text, and whoever plays the document speaks it.
+# A recording is an optimisation - useful when a human voiced it, or when the
+# exact performance matters - not a requirement, and a document that names
+# .wav files it cannot guarantee will travel is a document that plays silent
+# on someone else's machine.
+#
+# Load this into the GeoStudio plugin with "Generate narration" ticked and it
+# renders complete: camera, captions, basemaps and a voice, from this file
+# alone.
+# ─────────────────────────────────────────────────────────────────────────────
+
+story:
+  title: "Iceland: A Country Still Being Built"
+  author: "GeoStudio"
+  crs: "EPSG:4326"
+  tags: ["iceland", "geology", "volcano", "plate tectonics"]
+
+settings:
+  default_basemap: bm_dark
+  default_duration: 9
+  default_transition: fly
+  loop: false
+
+# ─── BASEMAPS ────────────────────────────────────────────────────────────────
+# Declared rather than named, so a reader that has never heard of "bm_dark"
+# can still draw it and still credit it correctly.
+
+basemaps:
+  - id: bm_dark
+    name: "CartoDB Dark Matter"
+    type: xyz
+    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
+    max_zoom: 20
+    attribution: "© OpenStreetMap contributors © CARTO"
+
+  - id: bm_terrain
+    name: "OpenTopoMap"
+    type: xyz
+    url: "https://tile.opentopomap.org/{z}/{x}/{y}.png"
+    max_zoom: 17
+    attribution: "© OpenStreetMap contributors, SRTM | © OpenTopoMap (CC-BY-SA)"
+
+  - id: bm_satellite
+    name: "Esri World Imagery"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "© Esri, Maxar, Earthstar Geographics"
+
+# ─── PLACES ──────────────────────────────────────────────────────────────────
+# Geocoding is an authoring step. These were resolved once, written down, and
+# are never looked up again at playback.
+
+places:
+  - id: pl_iceland
+    as_written: "Iceland"
+    resolved:
+      name: "Iceland"
+      point: [-19.0, 64.9]
+      bounds: [[-24.6, 63.3], [-13.5, 66.6]]
+      kind: country
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.98
+
+  - id: pl_thingvellir
+    as_written: "Þingvellir"
+    resolved:
+      name: "Þingvellir National Park, Iceland"
+      point: [-21.13, 64.255]
+      bounds: [[-21.22, 64.22], [-21.02, 64.30]]
+      kind: landmark
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.95
+
+  - id: pl_reykjavik
+    as_written: "Reykjavík"
+    resolved:
+      name: "Reykjavík, Iceland"
+      point: [-21.94, 64.146]
+      bounds: [[-22.05, 64.09], [-21.75, 64.18]]
+      kind: city
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.97
+
+  - id: pl_krafla
+    as_written: "Krafla"
+    resolved:
+      name: "Krafla, Iceland"
+      point: [-16.78, 65.72]
+      bounds: [[-16.90, 65.66], [-16.66, 65.78]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.92
+
+  - id: pl_vatnajokull
+    as_written: "Vatnajökull"
+    resolved:
+      name: "Vatnajökull, Iceland"
+      point: [-16.8, 64.4]
+      bounds: [[-18.2, 63.95], [-15.5, 64.85]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.94
+
+  - id: pl_grimsvotn
+    as_written: "Grímsvötn"
+    resolved:
+      name: "Grímsvötn, Iceland"
+      point: [-17.33, 64.42]
+      bounds: [[-17.45, 64.37], [-17.20, 64.47]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.90
+
+  - id: pl_eyjafjallajokull
+    as_written: "Eyjafjallajökull"
+    resolved:
+      name: "Eyjafjallajökull, Iceland"
+      point: [-19.62, 63.63]
+      bounds: [[-19.80, 63.57], [-19.42, 63.69]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.93
+
+  - id: pl_heimaey
+    as_written: "Heimaey"
+    resolved:
+      name: "Heimaey, Vestmannaeyjar, Iceland"
+      point: [-20.27, 63.44]
+      bounds: [[-20.33, 63.39], [-20.20, 63.47]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.91
+
+  - id: pl_surtsey
+    as_written: "Surtsey"
+    resolved:
+      name: "Surtsey, Iceland"
+      point: [-20.60, 63.30]
+      bounds: [[-20.65, 63.28], [-20.55, 63.32]]
+      kind: natural
+      provider: nominatim
+      resolved_at: "2026-08-20T00:00:00Z"
+      confidence: 0.89
+
+# ─── AUDIO AND MEDIA ─────────────────────────────────────────────────────────
+# Empty, and present only because the schema lists both as required. This
+# story has no recordings and no images by design - its narration is text and
+# whoever plays it speaks it. Requiring these to exist forces every text-only
+# document to carry two empty lists to be considered valid, which is a defect
+# in the schema rather than anything about this story.
+
+audio: []
+media: []
+
+# ─── ANNOTATIONS ─────────────────────────────────────────────────────────────
+
+annotations:
+  - id: ann_surtsey_reserve
+    kind: circle
+    geometry: { type: Point, coordinates: [-20.60, 63.30] }
+    radius_m: 6000
+    label: "Closed to all but research"
+    style:
+      color: "#ff9d00"
+      fill_color: "#ff9d00"
+      fill_opacity: 0.18
+      weight: 2
+
+# ─── SCENES ──────────────────────────────────────────────────────────────────
+# Narration is text. Nothing here names a recording, because there is not one
+# and there does not need to be.
+
+scenes:
+  - id: sc_01_ridge
+    sequence: 1
+    title: "The Ridge"
+    place_id: pl_iceland
+    basemap: bm_dark
+    transition: cut
+    timing: { mode: derived, intended: 11 }
+    content:
+      caption: "Iceland sits astride the Mid-Atlantic Ridge."
+      narration: >-
+        Iceland is the only place on Earth where the Mid-Atlantic Ridge rises
+        above the sea. The island straddles the boundary between the North
+        American and Eurasian plates, which are pulling apart beneath it at
+        roughly two centimetres a year. The country is not finished. It is
+        still being made.
+
+  - id: sc_02_thingvellir
+    sequence: 2
+    title: "Where the Plates Part"
+    place_id: pl_thingvellir
+    basemap: bm_satellite
+    transition: fly
+    timing: { mode: derived, intended: 12 }
+    content:
+      caption: "Þingvellir — the rift you can walk into."
+      narration: >-
+        At Þingvellir you can walk down into the rift itself. The valley floor
+        has dropped as the plates draw apart, leaving a wall of basalt on
+        either side. Icelanders gathered here from the year 930 to hold the
+        Alþingi, one of the oldest parliaments in the world, in a place that
+        was quietly tearing open beneath them.
+
+  - id: sc_03_reykjavik
+    sequence: 3
+    title: "A City on the Heat"
+    place_id: pl_reykjavik
+    basemap: bm_dark
+    transition: fly
+    timing: { mode: derived, intended: 10 }
+    content:
+      caption: "Reykjavík runs on the heat below it."
+      narration: >-
+        Reykjavík takes its name from the steam its first settlers saw rising
+        from the ground. Today almost every building in the city is heated by
+        water drawn hot from the rock beneath, and nearly all of the country's
+        electricity comes from geothermal and hydroelectric power.
+
+  - id: sc_04_krafla
+    sequence: 4
+    title: "The Krafla Fires"
+    place_id: pl_krafla
+    basemap: bm_terrain
+    transition: fly
+    timing: { mode: derived, intended: 11 }
+    content:
+      caption: "Krafla, 1975 to 1984 — nine years of rifting."
+      narration: >-
+        In the north, the Krafla volcanic system spent nine years coming apart.
+        Between 1975 and 1984 the ground rose and fell repeatedly as magma
+        moved sideways underground, splitting the crust in a slow series of
+        eruptions and quakes that geologists watched from the beginning.
+
+  - id: sc_05_vatnajokull
+    sequence: 5
+    title: "Ice Over Fire"
+    place_id: pl_vatnajokull
+    basemap: bm_satellite
+    transition: fly
+    timing: { mode: derived, intended: 10 }
+    content:
+      caption: "Vatnajökull — Europe's largest ice cap by volume."
+      narration: >-
+        Vatnajökull covers about eight percent of the country, and beneath it
+        sit several active volcanoes. Ice and magma are an unstable pairing:
+        when one erupts under the other, the meltwater has nowhere to go but
+        out.
+
+  - id: sc_06_grimsvotn
+    sequence: 6
+    title: "The Glacier Flood"
+    place_id: pl_grimsvotn
+    basemap: bm_satellite
+    transition: dissolve
+    timing: { mode: derived, intended: 11 }
+    content:
+      caption: "Grímsvötn — meltwater held, then released."
+      narration: >-
+        Grímsvötn lies buried under the ice, melting a lake above itself that
+        drains catastrophically when the pressure gives way. Icelandic has a
+        word for the resulting flood: jökulhlaup. In 1996 one of them carried
+        away a stretch of the ring road along the south coast.
+
+  - id: sc_07_eyjafjallajokull
+    sequence: 7
+    title: "The Ash Cloud"
+    place_id: pl_eyjafjallajokull
+    basemap: bm_terrain
+    transition: fly
+    timing: { mode: derived, intended: 12 }
+    content:
+      caption: "Eyjafjallajökull, 2010 — a small eruption, a large disruption."
+      narration: >-
+        In April 2010, meltwater met rising magma under Eyjafjallajökull and
+        shattered it into fine ash. The eruption was modest by Icelandic
+        standards, but the wind carried the ash straight into European
+        airspace, and for several days most flights across the continent were
+        grounded.
+
+  - id: sc_08_heimaey
+    sequence: 8
+    title: "Cooling the Lava"
+    place_id: pl_heimaey
+    basemap: bm_satellite
+    transition: fly
+    timing: { mode: derived, intended: 12 }
+    content:
+      caption: "Heimaey, 1973 — a harbour saved with seawater."
+      narration: >-
+        On Heimaey in 1973 a fissure opened along the edge of the town
+        overnight, and the population was evacuated by fishing boat before
+        dawn. As lava advanced on the harbour, crews pumped seawater onto its
+        front for months to chill and slow it. The harbour survived, and the
+        new rock left it better sheltered than before.
+
+  - id: sc_09_surtsey
+    sequence: 9
+    title: "An Island From Nothing"
+    place_id: pl_surtsey
+    basemap: bm_satellite
+    transition: fly
+    annotation_ids: [ann_surtsey_reserve]
+    timing: { mode: derived, intended: 12 }
+    content:
+      caption: "Surtsey — born 1963, and left alone ever since."
+      narration: >-
+        Ten years earlier and a little to the south, a fishing crew had watched
+        smoke rise from open water. The eruption lasted until 1967 and left
+        behind an island where there had been none. Surtsey has been closed to
+        almost everyone since the day it appeared, so that biologists can watch
+        what arrives, in what order, entirely undisturbed.
+
+  - id: sc_10_unfinished
+    sequence: 10
+    title: "Unfinished"
+    place_id: pl_iceland
+    basemap: bm_dark
+    transition: fly
+    timing: { mode: derived, intended: 10 }
+    content:
+      caption: "Still being built."
+      narration: >-
+        None of this is history. The plates are still separating, the ice still
+        sits on the fire, and new land still arrives without much notice.
+        Iceland is a country you can watch being built.
+
+attribution:
+  - "© OpenStreetMap contributors © CARTO"
+  - "© OpenStreetMap contributors, SRTM | © OpenTopoMap (CC-BY-SA)"
+  - "© Esri, Maxar, Earthstar Geographics"

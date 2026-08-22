@@ -1,88 +1,285 @@
 name: downtown-redevelopment
 version: 1.0.0
 profile: geostory
+description: How San Francisco rebuilt the forty acres around its bus terminal
+
+# ─────────────────────────────────────────────────────────────────────────────
+# A planning-department story: a real redevelopment area, told from the ground.
+#
+# This example exists to exercise the parts of the format the others do not -
+# the basemaps and annotations registries, per-scene layer visibility, and a
+# 3D camera request that a 2D renderer must degrade rather than reject.
+#
+# Every place here is real and every coordinate resolves. An example that
+# invents a city while claiming a high-confidence geocode teaches the opposite
+# of what the places registry is for.
+# ─────────────────────────────────────────────────────────────────────────────
+
 story:
-  title: "Downtown Redevelopment Initiative"
+  title: "Rebuilding Transbay"
   author: "Urban Planning Department"
   crs: "EPSG:4326"
+  tags: ["urban planning", "transit", "san francisco", "redevelopment"]
+
+settings:
+  default_basemap: bm_streets
+  default_duration: 10
+  default_transition: fly
+  camera_3d_degradation: 3d_degradation_wide_shot
+  loop: false
+
+basemaps:
+  - id: bm_streets
+    name: "CartoDB Positron"
+    type: xyz
+    url: "https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+    max_zoom: 20
+    attribution: "© OpenStreetMap contributors © CARTO"
+
+  - id: bm_aerial
+    name: "Esri World Imagery"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 19
+    attribution: "© Esri, Maxar, Earthstar Geographics"
 
 places:
-  - id: pl_downtown
-    as_written: "Downtown Sector"
+  - id: pl_transbay
+    as_written: "the Transbay district"
     resolved:
-      name: "Downtown, Metro City"
-      point: [-122.4194, 37.7749]
-      bounds: [[-122.43, 37.76], [-122.40, 37.79]]
+      name: "Transbay, San Francisco, California"
+      point: [-122.3948, 37.7887]
+      bounds: [[-122.4005, 37.7845], [-122.3890, 37.7925]]
+      kind: region
+      provider: nominatim
+      resolved_at: "2026-08-21T00:00:00Z"
+      confidence: 0.88
+
+  - id: pl_transit_center
+    as_written: "Salesforce Transit Center"
+    resolved:
+      name: "Salesforce Transit Center, San Francisco"
+      point: [-122.3969, 37.7896]
+      bounds: [[-122.4005, 37.7889], [-122.3936, 37.7903]]
       kind: landmark
       provider: nominatim
-      resolved_at: "2026-08-20T00:00:00Z"
-      confidence: 0.98
+      resolved_at: "2026-08-21T00:00:00Z"
+      confidence: 0.96
 
-audio:
-  - id: nar_01
-    kind: narration
-    src: "audio/plan-01.mp3"
-    at: 0.0
-    duration: 10.5
-  - id: nar_02
-    kind: narration
-    src: "audio/plan-02.mp3"
-    at: 10.5
-    duration: 15.0
+  - id: pl_salesforce_tower
+    as_written: "Salesforce Tower"
+    resolved:
+      name: "Salesforce Tower, San Francisco"
+      point: [-122.3968, 37.7897]
+      kind: landmark
+      provider: nominatim
+      resolved_at: "2026-08-21T00:00:00Z"
+      confidence: 0.97
 
-media:
-  - id: img_render
-    kind: image
-    src: "media/future-render.jpg"
-    at: 10.5
-    placement: full
-    origin: upload
-    caption: "Architectural render of the new transit hub"
+  - id: pl_rincon_hill
+    as_written: "Rincon Hill"
+    resolved:
+      name: "Rincon Hill, San Francisco, California"
+      point: [-122.3899, 37.7857]
+      bounds: [[-122.3945, 37.7830], [-122.3855, 37.7880]]
+      kind: region
+      provider: nominatim
+      resolved_at: "2026-08-21T00:00:00Z"
+      confidence: 0.90
+
+# Narration is text. Nothing here names a recording, because there is not one
+# and there does not need to be - see the core invariant in the README.
+audio: []
+media: []
 
 layers:
-  - id: zoning
-    name: "New Zoning Map"
+  - id: lyr_plan_area
+    name: "Transbay Redevelopment Project Area"
     type: geojson
-    source: "layers/zoning-2026.geojson"
-    visible: false
+    source: "layers/transbay-project-area.geojson"
+    style:
+      color: "#1D4ED8"
+      fill_opacity: 0.12
+      weight: 2
+
+  - id: lyr_height_limits
+    name: "Height and Bulk Districts"
+    type: geojson
+    source: "layers/height-limits.geojson"
+    style:
+      color: "#B45309"
+      fill_opacity: 0.2
+      weight: 1
+
+annotations:
+  - id: ann_walk_radius
+    kind: circle
+    geometry: { type: Point, coordinates: [-122.3969, 37.7896] }
+    radius_m: 800
+    label: "Ten minutes on foot"
+    style:
+      color: "#0F766E"
+      fill_color: "#0F766E"
+      fill_opacity: 0.1
+      weight: 2
+
+  - id: ann_bus_ramp
+    kind: line
+    geometry:
+      type: LineString
+      coordinates:
+        - [-122.3903, 37.7908]
+        - [-122.3931, 37.7902]
+        - [-122.3958, 37.7898]
+    label: "Elevated bus ramp from the Bay Bridge"
+    style:
+      color: "#B91C1C"
+      weight: 3
+
+  - id: ann_tower_site
+    kind: marker
+    geometry: { type: Point, coordinates: [-122.3968, 37.7897] }
+    label: "Salesforce Tower — 326 m"
+    style:
+      color: "#111827"
 
 scenes:
-  - id: sc_01
+  - id: sc_01_terminal
     sequence: 1
-    title: "Current Footprint"
-    place_id: pl_downtown
-    timing:
-      mode: derived
-      intended: 12
-      measured: 10.5
-      source: nar_01
-    camera:
-      mode: 3d
-      frame:
-        bounds: [[-122.43, 37.76], [-122.40, 37.79]]
-    transition: fly
-    audio_ids: [nar_01]
+    title: "What Was There"
+    place_id: pl_transbay
+    basemap: bm_streets
+    transition: cut
+    timing: { mode: derived, intended: 13 }
+    layers_visible: [lyr_plan_area]
     content:
-      caption: "The current footprint of the downtown sector."
+      caption: "The Transbay Terminal, 1939 to 2010."
+      narration: >-
+        For seventy years this corner of downtown San Francisco was organised
+        around a bus terminal. The Transbay Terminal opened in nineteen
+        thirty-nine to receive electric trains from across the Bay Bridge, and
+        when the trains stopped running it was converted to buses and slowly
+        surrounded by parking lots and freeway ramps.
 
-  - id: sc_02
+  - id: sc_02_plan_area
     sequence: 2
-    title: "Future Zoning"
-    place_id: pl_downtown
-    timing:
-      mode: derived
-      intended: 15
-      measured: 15.0
-      source: nar_02
+    title: "The Project Area"
+    place_id: pl_transbay
+    basemap: bm_streets
+    transition: fly
+    timing: { mode: derived, intended: 12 }
+    layers_visible: [lyr_plan_area, lyr_height_limits]
+    content:
+      caption: "Roughly forty acres, replanned as one piece."
+      narration: >-
+        The redevelopment plan treated the whole district as a single project
+        rather than a series of parcels. Publicly owned land freed up by
+        demolishing the old freeway ramps was sold to help fund the new transit
+        centre, and height limits were raised in a ring that steps down as it
+        moves away from it.
+
+  - id: sc_03_walkshed
+    sequence: 3
+    title: "Ten Minutes on Foot"
+    place_id: pl_transit_center
+    basemap: bm_streets
+    transition: fly
+    timing: { mode: derived, intended: 11 }
+    annotation_ids: [ann_walk_radius, ann_bus_ramp]
+    content:
+      caption: "Density was allocated by walking distance."
+      narration: >-
+        Everything was measured from the front door of the transit centre. The
+        tallest towers were allowed closest to it, and the ring drawn here is
+        roughly eight hundred metres, about ten minutes on foot. The red line
+        is the elevated ramp that brings buses in directly from the bridge.
+
+  - id: sc_04_transit_center
+    sequence: 4
+    title: "The New Centre"
+    place_id: pl_transit_center
+    basemap: bm_aerial
+    transition: dissolve
+    timing: { mode: derived, intended: 14 }
+    content:
+      caption: "Opened 2018, closed six weeks later, reopened 2019."
+      narration: >-
+        The Salesforce Transit Center opened in August twenty eighteen and shut
+        again six weeks later, when cracks were found in two steel beams over
+        Fremont Street. It reopened the following July, after the beams were
+        repaired and the design independently reviewed. Below it sits an empty
+        train box, built for rail service that has not yet been funded.
+
+  - id: sc_05_park
+    sequence: 5
+    title: "The Roof"
+    place_id: pl_transit_center
+    basemap: bm_aerial
+    transition: fly
+    timing: { mode: fixed, intended: 10 }
+    content:
+      caption: "Salesforce Park — 5.4 acres, four storeys up."
+      narration: >-
+        The roof is a public park: five and a half acres of gardens running the
+        full length of the building, about twenty metres above the street. It
+        is the part of the project people actually use every day.
+
+  - id: sc_06_tower
+    sequence: 6
+    title: "The Tower"
+    place_id: pl_salesforce_tower
+    basemap: bm_aerial
+    transition: fly
+    timing: { mode: derived, intended: 11 }
+    annotation_ids: [ann_tower_site]
     camera:
       mode: 3d
-      center: [-122.4194, 37.7749]
-      zoom: 15
-    transition: dissolve
-    layers_visible: [zoning]
-    audio_ids: [nar_02]
-    media_ids: [img_render]
+      center: [-122.3968, 37.7897]
+      zoom: 17
+      pitch: 55
+      bearing: 20
     content:
-      caption: "Proposed transit hub and rezoning boundaries."
+      caption: "326 metres, and part of how the terminal was paid for."
+      narration: >-
+        Salesforce Tower rises three hundred and twenty-six metres beside the
+        transit centre, the tallest building in San Francisco. The land beneath
+        it was sold by the transit authority, and that sale is a significant
+        part of how the terminal below was funded.
 
-attribution: []
+  - id: sc_07_rincon
+    sequence: 7
+    title: "Down the Hill"
+    place_id: pl_rincon_hill
+    basemap: bm_streets
+    transition: fly
+    timing: { mode: derived, intended: 12 }
+    layers_visible: [lyr_height_limits]
+    layers_hidden: [lyr_plan_area]
+    content:
+      caption: "Rincon Hill absorbed the housing."
+      narration: >-
+        South of the transit centre, Rincon Hill was rezoned from light
+        industry to high-density housing, and thousands of homes were built on
+        blocks that had held warehouses and freeway approaches. Towers there
+        were required to contribute towards affordable housing elsewhere in the
+        district.
+
+  - id: sc_08_now
+    sequence: 8
+    title: "Twenty Years On"
+    place_id: pl_transbay
+    basemap: bm_aerial
+    transition: dissolve
+    timing: { mode: derived, intended: 11 }
+    layers_visible: [lyr_plan_area]
+    content:
+      caption: "A district built around a building that is not finished."
+      narration: >-
+        Two decades after the plan was adopted, the skyline is built and the
+        streets are rebuilt, while the railway the whole thing was designed
+        around remains a proposal. Whether Transbay reads as a success depends
+        largely on whether the trains ever arrive.
+
+attribution:
+  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, Maxar, Earthstar Geographics"
