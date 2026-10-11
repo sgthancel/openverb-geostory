@@ -17,12 +17,12 @@ story:
   thumbnail: media/cover.jpg
 
 basemaps:
-  - id: carto-dark
-    name: "CartoDB Dark Matter"
+  - id: dark-canvas
+    name: "Esri Dark Gray Canvas"
     type: xyz
-    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    max_zoom: 20
-    attribution: "© OpenStreetMap contributors © CARTO"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 
   - id: arcgis-satellite
     name: "Esri World Imagery"
@@ -188,7 +188,7 @@ scenes:
       measured: 6.57
       source: nar_001
     transition: cut
-    basemap: carto-dark
+    basemap: dark-canvas
     timestamp: "2005-08-23T00:00:00Z"
     audio_ids:
       - nar_001
@@ -314,14 +314,14 @@ scenes:
 # ─── ATTRIBUTION (required) ───
 
 attribution:
-  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, HERE, Garmin, © OpenStreetMap contributors"
   - "© Esri, Maxar, Earthstar Geographics"
   - "NASA/MODIS"
 
 # ─── SETTINGS ───
 
 settings:
-  default_basemap: carto-dark
+  default_basemap: dark-canvas
   default_transition: fly
   default_duration: 8
   auto_narration: true

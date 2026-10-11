@@ -108,11 +108,11 @@ Basemaps are declared in a top-level registry to ensure document portability and
 ```yaml
 basemaps:
   - id: bm_dark
-    name: "CartoDB Dark Matter"
+    name: "Esri Dark Gray Canvas"
     type: xyz
-    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    max_zoom: 20
-    attribution: "© OpenStreetMap contributors © CARTO"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 ```
 
 Any implementation can coin IDs (e.g. `scene.basemap: bm_dark`), and a renderer that hasn't seen the ID before can still draw the universal `{z}/{x}/{y}` URL and credit it properly.

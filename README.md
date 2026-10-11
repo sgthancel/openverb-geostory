@@ -34,11 +34,11 @@ settings:
 
 basemaps:
   - id: bm_dark
-    name: "CartoDB Dark Matter"
+    name: "Esri Dark Gray Canvas"
     type: xyz
-    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    max_zoom: 20
-    attribution: "© OpenStreetMap contributors © CARTO"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 
 places:
   - id: pl_thingvellir
@@ -68,7 +68,7 @@ scenes:
         either side.
 
 attribution:
-  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 ```
 
 That document needs nothing else on disk. See [`examples/`](./examples) for complete stories.

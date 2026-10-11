@@ -38,11 +38,11 @@ settings:
 
 basemaps:
   - id: bm_dark
-    name: "CartoDB Dark Matter"
+    name: "Esri Dark Gray Canvas"
     type: xyz
-    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    max_zoom: 20
-    attribution: "© OpenStreetMap contributors © CARTO"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 
   - id: bm_terrain
     name: "OpenTopoMap"
@@ -347,6 +347,6 @@ scenes:
         Iceland is a country you can watch being built.
 
 attribution:
-  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, HERE, Garmin, © OpenStreetMap contributors"
   - "© OpenStreetMap contributors, SRTM | © OpenTopoMap (CC-BY-SA)"
   - "© Esri, Maxar, Earthstar Geographics"

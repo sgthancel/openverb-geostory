@@ -35,18 +35,18 @@ extensions:
     export_resolution: "1080p"
 
 settings:
-  default_basemap: carto-dark
+  default_basemap: dark-canvas
   default_duration: 10
   default_transition: fly
   loop: false
 
 basemaps:
-  - id: carto-dark
-    name: "CartoDB Dark Matter"
+  - id: dark-canvas
+    name: "Esri Dark Gray Canvas"
     type: xyz
-    url: "https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png"
-    max_zoom: 20
-    attribution: "© OpenStreetMap contributors © CARTO"
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
 
   - id: arcgis-satellite
     name: "Esri World Imagery"
@@ -294,7 +294,7 @@ scenes:
     sequence: 1
     title: "Origins"
     place_id: pl_ethiopia
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: cut
     timing: { mode: derived, intended: 25.9, measured: 25.9, source: nar_01 }
     audio_ids: [nar_01]
@@ -312,7 +312,7 @@ scenes:
     sequence: 2
     title: "Across the Red Sea"
     place_id: pl_mocha
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: fly
     delay: 0.4
     timing: { mode: derived, intended: 19.2, measured: 19.2, source: nar_02 }
@@ -330,7 +330,7 @@ scenes:
     sequence: 3
     title: "The First Coffeehouses"
     place_id: pl_istanbul
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: fly
     delay: 0.4
     timing: { mode: derived, intended: 17.3, measured: 17.3, source: nar_03 }
@@ -348,7 +348,7 @@ scenes:
     sequence: 4
     title: "Into Europe"
     place_id: pl_venice
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: dissolve
     delay: 0.4
     timing: { mode: derived, intended: 16.5, measured: 16.5, source: nar_04 }
@@ -364,7 +364,7 @@ scenes:
   - id: scene_05
     sequence: 5
     title: "Suspicion"
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: fade
     delay: 0.4
     timing: { mode: fixed, intended: 18.0, measured: 18.0, source: nar_05 }
@@ -381,7 +381,7 @@ scenes:
     sequence: 6
     title: "The Siege of Vienna"
     place_id: pl_vienna
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: fly
     delay: 0.4
     timing: { mode: derived, intended: 16.9, measured: 16.9, source: nar_06 }
@@ -399,7 +399,7 @@ scenes:
     sequence: 7
     title: "Penny Universities"
     place_id: pl_london
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: fly
     delay: 0.4
     timing: { mode: derived, intended: 16.1, measured: 16.1, source: nar_07 }
@@ -471,7 +471,7 @@ scenes:
     sequence: 10
     title: "Back to the Forest"
     place_id: pl_ethiopia
-    basemap: carto-dark
+    basemap: dark-canvas
     transition: dissolve
     delay: 0.4
     timing: { mode: derived, intended: 20.8, measured: 20.8, source: nar_10 }
@@ -486,6 +486,6 @@ scenes:
         is still sitting where the whole thing started.
 
 attribution:
-  - "© OpenStreetMap contributors © CARTO"
+  - "© Esri, HERE, Garmin, © OpenStreetMap contributors"
   - "© Esri, Maxar, Earthstar Geographics"
   - "GeoStudio"
