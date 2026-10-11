@@ -1,0 +1,265 @@
+name: rivers-of-the-ocean
+version: 1.0.0
+profile: geostory
+description: The ocean currents that move heat around the planet
+
+# ─────────────────────────────────────────────────────────────────────────────
+# The example for animated flow.
+#
+# A still line says a route exists. These currents are defined by direction
+# and speed - the Gulf Stream matters because it runs north-east and because
+# it is fast - and that is the part a static frame cannot carry at all.
+#
+# `animate` is additive by design. A renderer that has never heard of it draws
+# every line here correctly and simply does not move them, so adding motion to
+# the format cost older readers nothing.
+#
+# Narration is text, as always. No audio file ships with this document.
+# ─────────────────────────────────────────────────────────────────────────────
+
+story:
+  title: "Rivers of the Ocean"
+  author: "GeoStudio"
+  crs: "EPSG:4326"
+  tags: ["ocean", "climate", "currents", "physical geography"]
+
+settings:
+  default_basemap: bm_ocean
+  default_duration: 12
+  default_transition: fly
+  loop: false
+
+basemaps:
+  - id: bm_ocean
+    name: "Esri Ocean Base"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 13
+    attribution: "© Esri, GEBCO, NOAA, National Geographic"
+
+  - id: bm_dark
+    name: "Esri Dark Gray Canvas"
+    type: xyz
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+    max_zoom: 16
+    attribution: "© Esri, HERE, Garmin, © OpenStreetMap contributors"
+
+audio: []
+media: []
+layers: []
+
+places:
+  - id: pl_atlantic
+    as_written: "the North Atlantic"
+    resolved:
+      name: "North Atlantic Ocean"
+      point: [-40.0, 40.0]
+      bounds: [[-80.0, 20.0], [-5.0, 60.0]]
+      kind: natural
+      provider: manual
+      resolved_at: "2026-10-11T00:00:00Z"
+      confidence: 0.9
+
+  - id: pl_florida
+    as_written: "the Florida Straits"
+    resolved:
+      name: "Straits of Florida"
+      point: [-79.5, 25.0]
+      bounds: [[-82.0, 23.5], [-77.0, 26.5]]
+      kind: natural
+      provider: manual
+      resolved_at: "2026-10-11T00:00:00Z"
+      confidence: 0.88
+
+  - id: pl_norway
+    as_written: "the Norwegian Sea"
+    resolved:
+      name: "Norwegian Sea"
+      point: [2.0, 68.0]
+      bounds: [[-10.0, 62.0], [15.0, 74.0]]
+      kind: natural
+      provider: manual
+      resolved_at: "2026-10-11T00:00:00Z"
+      confidence: 0.87
+
+  - id: pl_pacific
+    as_written: "the equatorial Pacific"
+    resolved:
+      name: "Equatorial Pacific"
+      point: [-140.0, 0.0]
+      bounds: [[-180.0, -20.0], [-90.0, 20.0]]
+      kind: natural
+      provider: manual
+      resolved_at: "2026-10-11T00:00:00Z"
+      confidence: 0.85
+
+annotations:
+  - id: ann_gulf_stream
+    kind: line
+    label: "Gulf Stream"
+    geometry:
+      type: LineString
+      coordinates:
+        - [-80.1, 25.4]
+        - [-79.6, 30.5]
+        - [-75.2, 35.1]
+        - [-68.0, 38.2]
+        - [-55.0, 40.6]
+        - [-40.0, 44.5]
+        - [-20.0, 50.0]
+    style:
+      color: "#4FC3F7"
+      weight: 4
+    animate:
+      direction: forward
+      speed: 140
+      reveal: 2.5
+      fade_out: 1
+      particles: 26
+      particle: arrow
+      glow: true
+
+  - id: ann_north_atlantic_drift
+    kind: line
+    label: "North Atlantic Drift"
+    geometry:
+      type: LineString
+      coordinates:
+        - [-20.0, 50.0]
+        - [-10.0, 56.0]
+        - [-2.0, 62.0]
+        - [4.0, 68.0]
+        - [12.0, 71.0]
+    style:
+      color: "#81D4FA"
+      weight: 3
+    animate:
+      direction: forward
+      speed: 110
+      reveal: 2
+      particles: 18
+      particle: arrow
+      glow: true
+
+  - id: ann_canary
+    kind: line
+    label: "Canary Current"
+    geometry:
+      type: LineString
+      coordinates:
+        - [-12.0, 40.0]
+        - [-14.0, 32.0]
+        - [-18.0, 24.0]
+        - [-20.0, 16.0]
+    style:
+      color: "#90A4AE"
+      weight: 3
+    animate:
+      direction: forward
+      speed: 80
+      particles: 14
+      particle: arrow
+
+  - id: ann_equatorial
+    kind: line
+    label: "South Equatorial Current"
+    geometry:
+      type: LineString
+      coordinates:
+        - [-95.0, -2.0]
+        - [-120.0, -1.0]
+        - [-145.0, 0.0]
+        - [-170.0, 1.0]
+    style:
+      color: "#B0BEC5"
+      weight: 3
+    animate:
+      # Westward, which on a north-up map runs right to left - the direction
+      # is the whole point of drawing it.
+      direction: forward
+      speed: 95
+      particles: 20
+      particle: arrow
+
+scenes:
+  - id: sc_01_ocean
+    sequence: 1
+    title: "A Planet of Currents"
+    place_id: pl_atlantic
+    basemap: bm_ocean
+    transition: cut
+    timing: { mode: derived, intended: 12 }
+    content:
+      caption: "The ocean moves heat the way rivers move water."
+      narration: >-
+        The ocean is not still. It is crossed by currents that carry heat from
+        the equator towards the poles and cold water back again, and they move
+        more water than every river on land combined.
+
+  - id: sc_02_florida
+    sequence: 2
+    title: "Where It Begins"
+    place_id: pl_florida
+    basemap: bm_ocean
+    transition: fly
+    annotation_ids: [ann_gulf_stream]
+    timing: { mode: derived, intended: 14 }
+    content:
+      caption: "The Gulf Stream leaves the Florida Straits."
+      narration: >-
+        The Gulf Stream squeezes through the Straits of Florida and turns
+        north along the American coast. It is about a hundred kilometres wide
+        and it runs at nearly two metres a second, fast enough that early
+        sailing ships going south learned to stay out of it.
+
+  - id: sc_03_crossing
+    sequence: 3
+    title: "Across the Atlantic"
+    place_id: pl_atlantic
+    basemap: bm_ocean
+    transition: fly
+    annotation_ids: [ann_gulf_stream, ann_north_atlantic_drift, ann_canary]
+    timing: { mode: derived, intended: 15 }
+    content:
+      caption: "North-east, then round: the Atlantic gyre."
+      narration: >-
+        Off Newfoundland it leaves the coast and crosses the open ocean as the
+        North Atlantic Drift, and some of it turns south again along Africa as
+        the Canary Current. Together they make a slow clockwise wheel filling
+        the whole basin.
+
+  - id: sc_04_norway
+    sequence: 4
+    title: "Why Norway Is Warm"
+    place_id: pl_norway
+    basemap: bm_dark
+    transition: fly
+    annotation_ids: [ann_north_atlantic_drift]
+    timing: { mode: derived, intended: 14 }
+    content:
+      caption: "Ice-free ports at the latitude of Greenland."
+      narration: >-
+        The warm end of that drift reaches Norway, which is why its northern
+        ports stay ice-free through winter at latitudes where Greenland is
+        frozen solid. The same water then cools, sinks, and begins the long
+        return south in the deep.
+
+  - id: sc_05_pacific
+    sequence: 5
+    title: "The Other Ocean"
+    place_id: pl_pacific
+    basemap: bm_ocean
+    transition: dissolve
+    annotation_ids: [ann_equatorial]
+    timing: { mode: derived, intended: 13 }
+    content:
+      caption: "Westward along the equator."
+      narration: >-
+        The Pacific runs its own system. Along the equator the water is pushed
+        steadily west, piling up warm water near Indonesia - and when that
+        push weakens, the warm water slides back east and the world calls it
+        El Niño.
+
+attribution:
+  - "© Esri, GEBCO, NOAA, National Geographic"
+  - "© Esri, HERE, Garmin, © OpenStreetMap contributors"

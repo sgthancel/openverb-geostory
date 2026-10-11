@@ -1,6 +1,6 @@
 {
   "name": "@openverb/geostory",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "GeoStory profile for OpenVerb — a portable geographic narrative format (.ov)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

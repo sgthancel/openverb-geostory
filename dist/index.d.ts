@@ -26,7 +26,7 @@
  *
  * @packageDocumentation
  */
-export type { GeoStoryDocument, GeoStoryMetadata, GeoStoryPlace, GeoStoryResolvedPlace, PlaceKind, GeoStoryAudioClip, AudioKind, GeoStoryMediaItem, MediaKind, MediaPlacement, MediaOrigin, GeoStoryBasemap, BasemapType, GeoStoryLayer, LayerType, GeoStoryAnnotation, AnnotationKind, GeoStoryScene, TransitionType, GeoStoryCamera, CameraMode, EasingType, GeoStoryCameraFrame, GeoStoryCameraKeyframe, GeoStoryContent, GeoStoryTiming, TimingMode, GeoStorySettings, GeoStoryExtensions, GeoJSONGeometry, GeoJSONPoint, GeoJSONLineString, GeoJSONPolygon, GeoJSONMultiPoint, GeoJSONMultiLineString, GeoJSONMultiPolygon, CompiledVerbAction, CompiledScene, CompiledTimeline, VerbCategory, } from './types';
+export type { GeoStoryDocument, GeoStoryMetadata, GeoStoryPlace, GeoStoryResolvedPlace, PlaceKind, GeoStoryAudioClip, AudioKind, GeoStoryMediaItem, MediaKind, MediaPlacement, MediaOrigin, GeoStoryBasemap, BasemapType, GeoStoryLayer, LayerType, GeoStoryAnnotation, AnnotationKind, GeoStoryFlow, FlowDirection, FlowParticle, GeoStoryScene, TransitionType, GeoStoryCamera, CameraMode, EasingType, GeoStoryCameraFrame, GeoStoryCameraKeyframe, GeoStoryContent, GeoStoryTiming, TimingMode, GeoStorySettings, GeoStoryExtensions, GeoJSONGeometry, GeoJSONPoint, GeoJSONLineString, GeoJSONPolygon, GeoJSONMultiPoint, GeoJSONMultiLineString, GeoJSONMultiPolygon, CompiledVerbAction, CompiledScene, CompiledTimeline, VerbCategory, } from './types';
 export { VERB_CATEGORIES } from './types';
 export { GEOSTORY_SCHEMA, validateGeoStory, isGeoStoryDocument } from './schema';
 export { parseGeoStory, parseGeoStoryRaw, GeoStoryParseError } from './parser';

@@ -211,6 +211,36 @@ export interface GeoStoryBasemap {
     attribution: string;
 }
 export type AnnotationKind = 'circle' | 'polygon' | 'line' | 'marker';
+/**
+ * How a line is drawn over time.
+ *
+ * A static line says a route exists. An animated one says which way it runs
+ * and how fast - which for a current, a migration or a trade route is most of
+ * the content, and the part a still frame cannot carry.
+ *
+ * Everything here is optional and has a working default, so adding `animate`
+ * to an existing annotation is enough; and a renderer that ignores the block
+ * entirely still draws a correct, static line rather than nothing.
+ */
+export interface GeoStoryFlow {
+    /** Which way along the geometry the motion runs. */
+    direction?: FlowDirection;
+    /** Particle speed in pixels per second at 1080p, scaled to the output. */
+    speed?: number;
+    /** Seconds spent drawing the line in before it is fully visible. */
+    reveal?: number;
+    /** Seconds spent fading out at the end of the annotation's window. */
+    fade_out?: number;
+    /** How many markers travel the path at once. */
+    particles?: number;
+    /** What each travelling marker looks like. */
+    particle?: FlowParticle;
+    /** A soft halo around the line, for currents and routes over dark maps. */
+    glow?: boolean;
+    [unknownField: string]: unknown;
+}
+export type FlowDirection = 'forward' | 'reverse' | 'both';
+export type FlowParticle = 'arrow' | 'dot' | 'none';
 export interface GeoStoryAnnotation {
     id: string;
     kind: AnnotationKind;
@@ -222,6 +252,11 @@ export interface GeoStoryAnnotation {
         fill_opacity?: number;
         weight?: number;
     };
+    /**
+     * Motion along the geometry. Meaningful for lines; a renderer should
+     * ignore it on a marker, where there is no path to travel.
+     */
+    animate?: GeoStoryFlow;
     at?: number;
     until?: number;
 }

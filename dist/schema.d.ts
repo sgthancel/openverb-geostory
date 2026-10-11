@@ -304,6 +304,39 @@ export declare const GEOSTORY_SCHEMA: {
                             };
                         };
                     };
+                    animate: {
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            direction: {
+                                type: string;
+                                enum: string[];
+                            };
+                            speed: {
+                                type: string;
+                                minimum: number;
+                            };
+                            reveal: {
+                                type: string;
+                                minimum: number;
+                            };
+                            fade_out: {
+                                type: string;
+                                minimum: number;
+                            };
+                            particles: {
+                                type: string;
+                                minimum: number;
+                            };
+                            particle: {
+                                type: string;
+                                enum: string[];
+                            };
+                            glow: {
+                                type: string;
+                            };
+                        };
+                    };
                     at: {
                         type: string;
                         minimum: number;

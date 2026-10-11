@@ -28,7 +28,7 @@ All temporal references (`at` and `until`) across all top-level tracks (`audio`,
 
 Time `0.0` is the beginning of the entire story document. This prevents cascading drift when editing a flat timeline and allows clips to cross scene boundaries cleanly.
 
-## 3. Top-Level Registries
+## 4. Top-Level Registries
 
 Scenes DO NOT own their contents. Instead, they reference resources declared in root-level registries:
 
@@ -57,6 +57,51 @@ annotations:
 
 Scenes can explicitly toggle them via `annotation_ids: ["ann_rome_radius"]`, or the player can rely purely on their `at`/`until` absolute timeline windows.
 
+### Animated Annotations
+
+A line annotation may carry an `animate` block, which asks the renderer to
+move along the geometry rather than only draw it:
+
+```yaml
+annotations:
+  - id: ann_gulf_stream
+    kind: line
+    label: "Gulf Stream"
+    geometry:
+      type: LineString
+      coordinates: [[-80.1, 25.4], [-75.2, 35.1], [-55.0, 40.6], [-20.0, 50.0]]
+    style: { color: "#4FC3F7", weight: 4 }
+    animate:
+      direction: forward     # forward | reverse | both
+      speed: 140             # px/sec at 1080p, scaled to the output
+      reveal: 2.5            # seconds spent drawing the line in
+      fade_out: 1
+      particles: 26
+      particle: arrow        # arrow | dot | none
+      glow: true
+```
+
+This exists because direction and speed are often the content. A current, a
+migration, a trade route or a prevailing wind is defined by which way it runs
+and how fast, and a still line cannot say either.
+
+Three rules keep it safe to add:
+
+**`animate` is additive.** A renderer that does not implement it MUST still
+draw the annotation as a static line. Motion is never what makes the
+difference between a picture and an empty frame.
+
+**Every field is optional.** `animate: {}` is a valid request for motion with
+the renderer's own defaults, so an author can ask for movement without
+specifying how it should look.
+
+**It applies to geometry with a path.** On a marker, where there is nothing to
+travel along, a renderer SHOULD ignore it rather than treat the document as
+invalid.
+
+Annotations are timed by the scenes that reference them and by their own
+`at`/`until` window, so an animated line needs no timing of its own.
+
 ### The Places Registry
 
 Geocoding is an **authoring step**, never a playback step. The results of geocoding are committed directly to the `places` registry:
@@ -75,7 +120,7 @@ places:
       confidence: 0.92
 ```
 
-## 4. Scene Timing and Rescaling
+## 5. Scene Timing and Rescaling
 
 Scenes stretch to fit the actual recorded audio. The `timing` block separates authored intent from real-world measurement.
 
@@ -91,7 +136,7 @@ When `mode: derived` is set:
 2. When the scene duration differs from its previous value (e.g., after TTS generation or audio recording), **unlocked** camera keyframes scale proportionally based on the ratio of the new duration to the old duration.
 3. Keyframes with `locked: true` retain their absolute timing exactly.
 
-## 5. Camera Framing
+## 6. Camera Framing
 
 Bounds-based framing (`camera.frame.bounds`) is the preferred method for positioning the camera, as it adapts gracefully to different screen aspect ratios (e.g., 16:9 desktop vs. 9:16 mobile). 
 
@@ -117,14 +162,14 @@ basemaps:
 
 Any implementation can coin IDs (e.g. `scene.basemap: bm_dark`), and a renderer that hasn't seen the ID before can still draw the universal `{z}/{x}/{y}` URL and credit it properly.
 
-## 6. Unknown Field Preservation
+## 7. Unknown Field Preservation
 
 A compliant parser MUST preserve all unrecognized fields. 
 A compliant serializer MUST write them back exactly as they were found.
 
 This ensures host-specific data (e.g., internal QGIS settings, editor state, or AI studio prompts) is not destroyed when passed through a renderer or tool that does not understand it.
 
-## 7. Extensions
+## 8. Extensions
 
 Host-specific namespaced data SHOULD be placed in the `extensions` block to avoid top-level field collisions:
 

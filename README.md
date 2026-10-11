@@ -164,6 +164,38 @@ Scenes do not own their contents. Six top-level registries hold them, and scenes
 | `media` | Images and video |
 | `annotations` | Markers, circles, polygons and lines |
 
+### Animated lines
+
+A line annotation can ask to move. Direction and speed are often the content -
+a current, a migration route or a prevailing wind is defined by which way it
+runs and how fast, and a still line says neither:
+
+```yaml
+annotations:
+  - id: ann_gulf_stream
+    kind: line
+    label: "Gulf Stream"
+    geometry:
+      type: LineString
+      coordinates: [[-80.1, 25.4], [-75.2, 35.1], [-55.0, 40.6], [-20.0, 50.0]]
+    style: { color: "#4FC3F7", weight: 4 }
+    animate:
+      direction: forward     # forward | reverse | both
+      speed: 140             # px/sec at 1080p, scaled to the output
+      reveal: 2.5            # seconds spent drawing the line in
+      particles: 26
+      particle: arrow        # arrow | dot | none
+      glow: true
+```
+
+It is additive on purpose. Every field is optional, `animate: {}` is a valid
+request for motion with the renderer's defaults, and a renderer that has never
+heard of the block still draws a correct static line. Compiling a scene emits
+`geostory.annotation.show` before `geostory.annotation.flow`, so the picture is
+already on screen by the time motion is asked for.
+
+See [`examples/rivers-of-the-ocean.ov`](./examples/rivers-of-the-ocean.ov).
+
 Two rules about time are worth knowing before you write a player:
 
 - **`audio`, `media` and `camera.track` are document-absolute.** Time `0.0` is the start of the story, not the start of a scene. This is what stops edits cascading down a flat timeline.
@@ -187,6 +219,7 @@ Every document must declare `profile: geostory` at its root.
 | [`hurricane-katrina.ov`](./examples/hurricane-katrina.ov) | Bounds framing, camera keyframes, per-scene basemaps, data layers, timestamps |
 | [`downtown-redevelopment.ov`](./examples/downtown-redevelopment.ov) | Annotations, a 3D camera request, layer visibility, and a local-government use case |
 | [`history-of-coffee.ov`](./examples/history-of-coffee.ov) | A long-form narrative across thirteen countries, with a pinned scene |
+| [`rivers-of-the-ocean.ov`](./examples/rivers-of-the-ocean.ov) | **Animated flow** along four ocean currents, with no external files |
 
 ## Development
 

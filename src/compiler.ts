@@ -133,10 +133,22 @@ export function compileScene(scene: GeoStoryScene, doc: GeoStoryDocument): Compi
     }
   }
 
-  // 5. geostory.annotation.show
+  // 5. geostory.annotation.show, then flow for any that move
   if (scene.annotation_ids && scene.annotation_ids.length > 0) {
     for (const annId of scene.annotation_ids) {
       addAction('geostory.annotation.show', { id: annId });
+
+      // An animated annotation emits a second action after the first, so a
+      // renderer that knows nothing about motion still draws the line from
+      // the show and simply ignores what follows. The static picture is
+      // never the thing that breaks.
+      const annotation = doc.annotations?.find(a => a.id === annId);
+      if (annotation?.animate) {
+        addAction('geostory.annotation.flow', {
+          id: annId,
+          ...annotation.animate,
+        });
+      }
     }
   }
 

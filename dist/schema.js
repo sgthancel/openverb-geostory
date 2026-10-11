@@ -187,6 +187,19 @@ exports.GEOSTORY_SCHEMA = {
                             weight: { type: 'number', minimum: 0 },
                         }
                     },
+                    animate: {
+                        type: 'object',
+                        additionalProperties: true,
+                        properties: {
+                            direction: { type: 'string', enum: ['forward', 'reverse', 'both'] },
+                            speed: { type: 'number', minimum: 0 },
+                            reveal: { type: 'number', minimum: 0 },
+                            fade_out: { type: 'number', minimum: 0 },
+                            particles: { type: 'integer', minimum: 0 },
+                            particle: { type: 'string', enum: ['arrow', 'dot', 'none'] },
+                            glow: { type: 'boolean' },
+                        }
+                    },
                     at: { type: 'number', minimum: 0 },
                     until: { type: 'number', minimum: 0 },
                 }
