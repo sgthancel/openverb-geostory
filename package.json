@@ -46,7 +46,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sgthancel/openverb-geostory"
+    "url": "git+https://github.com/sgthancel/openverb-geostory.git"
   },
   "dependencies": {
     "@openverb/format": "^2.0.0-beta.3",
