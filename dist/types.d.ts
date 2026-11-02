@@ -187,8 +187,14 @@ export interface GeoStoryMediaItem {
      * Omit for whole-story media.
      */
     until?: number;
-    /** Screen placement */
-    placement: MediaPlacement;
+    /** Screen placement. Absent means `top_left`; ignored entirely when `fit` is set. */
+    placement?: MediaPlacement;
+    /** How the picture fills the frame. `cover` crops the overflow, `contain` fits it all in. */
+    fit?: 'cover' | 'contain';
+    /** A slow push on a `cover` image, so a still does not sit dead on screen. */
+    drift?: boolean;
+    /** 0 to 1. */
+    opacity?: number;
     /** Caption displayed with the media */
     caption?: string;
     /** Origin — REQUIRED. How this media was obtained. */
@@ -200,7 +206,7 @@ export interface GeoStoryMediaItem {
 }
 export type MediaKind = 'image' | 'video';
 export type MediaPlacement = 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | 'full';
-export type MediaOrigin = 'upload' | 'unsplash' | 'ai' | 'satellite' | 'screenshot' | 'other';
+export type MediaOrigin = 'upload' | 'unsplash' | 'ai' | 'satellite' | 'screenshot' | 'drawn' | 'other';
 export type BasemapType = 'xyz' | 'wms' | 'raster';
 export interface GeoStoryBasemap {
     id: string;
@@ -210,7 +216,63 @@ export interface GeoStoryBasemap {
     max_zoom?: number;
     attribution: string;
 }
-export type AnnotationKind = 'circle' | 'polygon' | 'line' | 'marker';
+export type AnnotationKind = 'circle' | 'polygon' | 'line' | 'marker'
+/** A label with no shape under it. The text is the annotation. */
+ | 'text'
+/** Bars or a line drawn from `series`. */
+ | 'chart'
+/** A raster placed on the frame or the map. */
+ | 'image';
+/**
+ * Which space an annotation is addressed in.
+ *
+ * `geo` is the default and means degrees. `canvas` means percentages of the
+ * frame — [0, 0] top left, [100, 100] bottom right — for a document that is
+ * composed against the picture rather than the ground. A document made
+ * entirely of canvas annotations needs no camera and no basemap.
+ */
+export type Space = 'geo' | 'canvas';
+/**
+ * How loudly a label speaks.
+ *
+ * On a map a place name is a place name and one size is right. On a frame
+ * with no map the labels ARE the content, and a headline reading exactly as
+ * loudly as a footnote is what makes a presentation look flat. Absent means
+ * `body`, so nothing written before this field changes.
+ */
+export type Emphasis = 'display' | 'title' | 'body' | 'caption';
+/** How an annotation arrives, or leaves. */
+export type EntranceType = 'fade' | 'rise' | 'fall' | 'left' | 'right'
+/** Revealed a character at a time. Meaningful only for text. */
+ | 'typewriter';
+export interface GeoStoryEntrance {
+    type?: EntranceType;
+    /** Seconds after the annotation's window opens before this begins. */
+    delay?: number;
+    /** Seconds the arrival takes. */
+    duration?: number;
+    [unknownField: string]: unknown;
+}
+/** Bars grow from a zero baseline; a line joins the points. */
+export type ChartKind = 'bars' | 'line';
+export interface GeoStoryChartPoint {
+    label: string;
+    value: number;
+}
+/**
+ * A leader line from a shape to its label, so the label can sit clear of the
+ * thing it names. Directions are compass words rather than degrees, because
+ * an author thinks "up and to the right" and degrees raise "from north?
+ * clockwise?" every time.
+ */
+export interface GeoStoryLeader {
+    direction?: 'north' | 'north_east' | 'east' | 'south_east' | 'south' | 'south_west' | 'west' | 'north_west';
+    /** Length as a fraction of the frame's shorter side. */
+    length?: number;
+    elbow?: boolean;
+    arrow?: boolean;
+    [unknownField: string]: unknown;
+}
 /**
  * How a line is drawn over time.
  *
@@ -259,6 +321,36 @@ export interface GeoStoryAnnotation {
     animate?: GeoStoryFlow;
     at?: number;
     until?: number;
+    /** Which space `geometry` and `pos` are read in. Defaults to `settings.default_space`, then `geo`. */
+    space?: Space;
+    /**
+     * Shorthand for a Point geometry, because writing nine lines of GeoJSON to
+     * put a headline in the middle of a frame is the kind of friction that
+     * makes a format feel like a chore. An explicit `geometry` wins.
+     *
+     * It is `pos` and NOT `at`, which this format already uses for WHEN
+     * something appears, in seconds.
+     */
+    pos?: [number, number];
+    /** How loudly the label speaks. Absent means `body`. */
+    emphasis?: Emphasis;
+    /**
+     * A circle's size in canvas space, as a percentage of the frame's shorter
+     * side. `radius_m` is metres and means nothing on a frame with no ground.
+     */
+    radius?: number;
+    /** How this annotation arrives. */
+    enter?: GeoStoryEntrance;
+    /** How it leaves. */
+    exit?: GeoStoryEntrance;
+    /** For `kind: chart` — bars or a line. Defaults to bars. */
+    chart?: ChartKind;
+    /** For `kind: chart` — the points to draw. */
+    series?: GeoStoryChartPoint[];
+    /** For `kind: chart` — [width, height] as percentages of the frame. */
+    size?: [number, number];
+    /** A leader line from the shape to its label. */
+    leader?: GeoStoryLeader;
 }
 export interface GeoStoryLayer {
     /** Unique identifier — referenced by scenes via layers_visible / layers_hidden */
@@ -475,6 +567,11 @@ export interface GeoStorySettings {
     auto_narration?: boolean;
     /** Whether the story loops */
     loop?: boolean;
+    /**
+     * The space annotations are read in when they do not say. Absent means
+     * `geo`, so nothing written before this field changes meaning.
+     */
+    default_space?: Space;
     /**
      * How a 2D-only renderer handles mode: 3d scenes.
      * Default: 'wide_shot' — degrades to a wide 2D view.

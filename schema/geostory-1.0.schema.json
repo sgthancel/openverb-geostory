@@ -13,6 +13,33 @@
     "scenes",
     "attribution"
   ],
+  "$defs": {
+    "entrance": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "fade",
+            "rise",
+            "fall",
+            "left",
+            "right",
+            "typewriter"
+          ]
+        },
+        "delay": {
+          "type": "number",
+          "minimum": 0
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    }
+  },
   "properties": {
     "name": {
       "type": "string"
@@ -206,7 +233,6 @@
           "id",
           "kind",
           "src",
-          "placement",
           "origin"
         ],
         "properties": {
@@ -241,6 +267,21 @@
               "full"
             ]
           },
+          "fit": {
+            "type": "string",
+            "enum": [
+              "cover",
+              "contain"
+            ]
+          },
+          "drift": {
+            "type": "boolean"
+          },
+          "opacity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
           "caption": {
             "type": "string"
           },
@@ -252,6 +293,7 @@
               "ai",
               "satellite",
               "screenshot",
+              "drawn",
               "other"
             ]
           },
@@ -355,7 +397,10 @@
               "circle",
               "polygon",
               "line",
-              "marker"
+              "marker",
+              "text",
+              "chart",
+              "image"
             ]
           },
           "geometry": {
@@ -367,6 +412,103 @@
           },
           "label": {
             "type": "string"
+          },
+          "space": {
+            "type": "string",
+            "enum": [
+              "geo",
+              "canvas"
+            ]
+          },
+          "pos": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "emphasis": {
+            "type": "string",
+            "enum": [
+              "display",
+              "title",
+              "body",
+              "caption"
+            ]
+          },
+          "radius": {
+            "type": "number",
+            "minimum": 0
+          },
+          "enter": {
+            "$ref": "#/$defs/entrance"
+          },
+          "exit": {
+            "$ref": "#/$defs/entrance"
+          },
+          "chart": {
+            "type": "string",
+            "enum": [
+              "bars",
+              "line"
+            ]
+          },
+          "size": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "label",
+                "value"
+              ],
+              "additionalProperties": true,
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "leader": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "direction": {
+                "type": "string",
+                "enum": [
+                  "north",
+                  "north_east",
+                  "east",
+                  "south_east",
+                  "south",
+                  "south_west",
+                  "west",
+                  "north_west"
+                ]
+              },
+              "length": {
+                "type": "number",
+                "minimum": 0
+              },
+              "elbow": {
+                "type": "boolean"
+              },
+              "arrow": {
+                "type": "boolean"
+              }
+            }
           },
           "style": {
             "type": "object",
@@ -734,6 +876,13 @@
         },
         "loop": {
           "type": "boolean"
+        },
+        "default_space": {
+          "type": "string",
+          "enum": [
+            "geo",
+            "canvas"
+          ]
         },
         "camera_3d_degradation": {
           "type": "string",

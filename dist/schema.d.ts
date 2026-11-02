@@ -12,6 +12,26 @@ export declare const GEOSTORY_SCHEMA: {
     type: string;
     additionalProperties: boolean;
     required: string[];
+    $defs: {
+        entrance: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                delay: {
+                    type: string;
+                    minimum: number;
+                };
+                duration: {
+                    type: string;
+                    minimum: number;
+                };
+            };
+        };
+    };
     properties: {
         name: {
             type: string;
@@ -195,6 +215,18 @@ export declare const GEOSTORY_SCHEMA: {
                         type: string;
                         enum: string[];
                     };
+                    fit: {
+                        type: string;
+                        enum: string[];
+                    };
+                    drift: {
+                        type: string;
+                    };
+                    opacity: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
                     caption: {
                         type: string;
                     };
@@ -286,6 +318,80 @@ export declare const GEOSTORY_SCHEMA: {
                     };
                     label: {
                         type: string;
+                    };
+                    space: {
+                        type: string;
+                        enum: string[];
+                    };
+                    pos: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                        minItems: number;
+                        maxItems: number;
+                    };
+                    emphasis: {
+                        type: string;
+                        enum: string[];
+                    };
+                    radius: {
+                        type: string;
+                        minimum: number;
+                    };
+                    enter: {
+                        $ref: string;
+                    };
+                    exit: {
+                        $ref: string;
+                    };
+                    chart: {
+                        type: string;
+                        enum: string[];
+                    };
+                    size: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                        minItems: number;
+                        maxItems: number;
+                    };
+                    series: {
+                        type: string;
+                        items: {
+                            type: string;
+                            required: string[];
+                            additionalProperties: boolean;
+                            properties: {
+                                label: {
+                                    type: string;
+                                };
+                                value: {
+                                    type: string;
+                                };
+                            };
+                        };
+                    };
+                    leader: {
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            direction: {
+                                type: string;
+                                enum: string[];
+                            };
+                            length: {
+                                type: string;
+                                minimum: number;
+                            };
+                            elbow: {
+                                type: string;
+                            };
+                            arrow: {
+                                type: string;
+                            };
+                        };
                     };
                     style: {
                         type: string;
@@ -610,6 +716,10 @@ export declare const GEOSTORY_SCHEMA: {
                 };
                 loop: {
                     type: string;
+                };
+                default_space: {
+                    type: string;
+                    enum: string[];
                 };
                 camera_3d_degradation: {
                     type: string;

@@ -162,6 +162,74 @@ basemaps:
 
 Any implementation can coin IDs (e.g. `scene.basemap: bm_dark`), and a renderer that hasn't seen the ID before can still draw the universal `{z}/{x}/{y}` URL and credit it properly.
 
+### Canvas Space
+
+An annotation is addressed in degrees by default. A document that composes
+against the picture rather than the ground sets `settings.default_space:
+canvas`, or `space: canvas` on an individual annotation, and its coordinates
+are then read as percentages of the frame — `[0, 0]` top left, `[100, 100]`
+bottom right. A document made entirely of canvas annotations needs no camera
+and no basemap, because there is no ground for a camera to point at.
+
+```yaml
+settings:
+  default_space: canvas
+
+annotations:
+  - id: headline
+    kind: text
+    pos: [50, 10]
+    label: "Lines of Longitude"
+    emphasis: display
+    enter: { type: rise, delay: 0.3, duration: 0.9 }
+```
+
+`pos` is shorthand for a Point geometry. It is deliberately NOT `at`, which
+this profile already uses for WHEN an annotation appears, in seconds.
+
+A percentage is meaningful only against the shape the document was written
+for. A renderer that draws into a rectangle of a different aspect SHOULD
+letterbox the authored shape into it rather than stretch to fill, or a circle
+computed by the author will not come out a circle.
+
+### Emphasis
+
+`emphasis` is one of `display`, `title`, `body`, `caption`, and absent means
+`body`. On a map a place name is a place name and one size is right; on a
+frame with no map the labels are the content, and a headline reading exactly
+as loudly as a footnote is what makes a presentation look flat.
+
+### Entrances
+
+`enter` and `exit` take `{ type, delay, duration }`, where type is one of
+`fade`, `rise`, `fall`, `left`, `right`, `typewriter`. `delay` is measured
+from the opening of the annotation's own window, not from the start of the
+document.
+
+A renderer that animates an annotation's geometry over time — see Animated
+Annotations above — MAY ignore `enter` on that annotation, because the
+`animate` block already describes how it arrives.
+
+### Charts
+
+`kind: chart` draws `series` as bars or a line, sized by `size` as
+percentages of the frame and positioned by its geometry like anything else.
+
+```yaml
+  - id: census
+    kind: chart
+    chart: bars
+    pos: [50, 55]
+    size: [60, 30]
+    series:
+      - { label: read, value: 11 }
+      - { label: ui, value: 10 }
+```
+
+Deliberately small: bars and a line, values above and categories below. No
+axes, gridlines, legends, stacking or dual scales. Those are the things that
+make a chart library, and a chart library is not what a renderer needs.
+
 ## 7. Unknown Field Preservation
 
 A compliant parser MUST preserve all unrecognized fields. 

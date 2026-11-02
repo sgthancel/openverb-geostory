@@ -14,6 +14,21 @@ export const GEOSTORY_SCHEMA = {
   type: 'object',
   additionalProperties: true,
   required: ['name', 'version', 'profile', 'story', 'places', 'audio', 'media', 'scenes', 'attribution'],
+  $defs: {
+    // How an annotation arrives, or leaves. Shared by `enter` and `exit`.
+    entrance: {
+      type: 'object',
+      additionalProperties: true,
+      properties: {
+        type: {
+          type: 'string',
+          enum: ['fade', 'rise', 'fall', 'left', 'right', 'typewriter'],
+        },
+        delay: { type: 'number', minimum: 0 },
+        duration: { type: 'number', minimum: 0 },
+      },
+    },
+  },
   properties: {
     name: { type: 'string' },
     version: { type: 'string' },
@@ -111,7 +126,7 @@ export const GEOSTORY_SCHEMA = {
       items: {
         type: 'object',
         additionalProperties: true,
-        required: ['id', 'kind', 'src', 'placement', 'origin'],
+        required: ['id', 'kind', 'src', 'origin'],
         properties: {
           id: { type: 'string' },
           kind: { type: 'string', enum: ['image', 'video'] },
@@ -122,10 +137,15 @@ export const GEOSTORY_SCHEMA = {
             type: 'string',
             enum: ['top_left', 'top_right', 'bottom_left', 'bottom_right', 'full'],
           },
+          // How a picture fills the frame. `cover` crops the overflow and
+          // ignores `placement` entirely; `contain` fits the whole image in.
+          fit: { type: 'string', enum: ['cover', 'contain'] },
+          drift: { type: 'boolean' },
+          opacity: { type: 'number', minimum: 0, maximum: 1 },
           caption: { type: 'string' },
           origin: {
             type: 'string',
-            enum: ['upload', 'unsplash', 'ai', 'satellite', 'screenshot', 'other'],
+            enum: ['upload', 'unsplash', 'ai', 'satellite', 'screenshot', 'drawn', 'other'],
           },
           credit: { type: 'string' },
         },
@@ -176,10 +196,55 @@ export const GEOSTORY_SCHEMA = {
         additionalProperties: true,
         properties: {
           id: { type: 'string' },
-          kind: { type: 'string', enum: ['circle', 'polygon', 'line', 'marker'] },
+          kind: {
+            type: 'string',
+            enum: ['circle', 'polygon', 'line', 'marker', 'text', 'chart', 'image'],
+          },
           geometry: { type: 'object' },
           radius_m: { type: 'number', minimum: 0 },
           label: { type: 'string' },
+
+          // Composition against the frame rather than the ground.
+          space: { type: 'string', enum: ['geo', 'canvas'] },
+          pos: { type: 'array', items: { type: 'number' }, minItems: 2, maxItems: 2 },
+          emphasis: { type: 'string', enum: ['display', 'title', 'body', 'caption'] },
+          radius: { type: 'number', minimum: 0 },
+
+          enter: { $ref: '#/$defs/entrance' },
+          exit: { $ref: '#/$defs/entrance' },
+
+          // kind: chart
+          chart: { type: 'string', enum: ['bars', 'line'] },
+          size: { type: 'array', items: { type: 'number' }, minItems: 2, maxItems: 2 },
+          series: {
+            type: 'array',
+            items: {
+              type: 'object',
+              required: ['label', 'value'],
+              additionalProperties: true,
+              properties: {
+                label: { type: 'string' },
+                value: { type: 'number' },
+              },
+            },
+          },
+
+          leader: {
+            type: 'object',
+            additionalProperties: true,
+            properties: {
+              direction: {
+                type: 'string',
+                enum: [
+                  'north', 'north_east', 'east', 'south_east',
+                  'south', 'south_west', 'west', 'north_west',
+                ],
+              },
+              length: { type: 'number', minimum: 0 },
+              elbow: { type: 'boolean' },
+              arrow: { type: 'boolean' },
+            },
+          },
           style: {
             type: 'object',
             properties: {
@@ -351,6 +416,7 @@ export const GEOSTORY_SCHEMA = {
         default_duration: { type: 'number', minimum: 0 },
         auto_narration: { type: 'boolean' },
         loop: { type: 'boolean' },
+        default_space: { type: 'string', enum: ['geo', 'canvas'] },
         camera_3d_degradation: {
           type: 'string',
           enum: ['3d_degradation_wide_shot', '3d_degradation_skip'],
