@@ -231,6 +231,29 @@ npm test
 
 The schema is generated, not hand-written — edit `src/types.ts` and rebuild.
 
+## Part of the OpenVerb ecosystem
+
+This package owns the **format**: it parses, validates, serialises and
+compiles `.ov` documents. It draws nothing.
+
+Drawing is [`@openverb/motion`](https://www.npmjs.com/package/@openverb/motion),
+which takes a document parsed by this package and renders it to frames or to
+video. The two are deliberately separate, so a host can adopt the format
+without adopting a renderer, or write its own renderer and still read
+everybody's documents.
+
+| Package | Registry | What it does |
+| --- | --- | --- |
+| `openverb` | [npm](https://www.npmjs.com/package/openverb) / [PyPI](https://pypi.org/project/openverb/) | Core framework — load and validate verb libraries |
+| `@openverb/stdlib` | [npm](https://www.npmjs.com/package/@openverb/stdlib) | Standard verbs for common UI operations |
+| `@openverb/geostory` | npm (this repo) | The `.ov` format — parse, validate, serialise, compile |
+| `@openverb/motion` | [npm](https://www.npmjs.com/package/@openverb/motion) | Renders a document to frames and video |
+
+A document whose annotations are addressed in canvas space, with no basemap,
+is still a GeoStory document and still says `profile: geostory`. "Motion" is
+not a second format — it is what this one looks like when the geography is
+absent.
+
 ## License
 
 MIT
